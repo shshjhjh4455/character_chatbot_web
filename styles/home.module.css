@@ -1,0 +1,17 @@
+.div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding : 20px 20px;
+}
+
+
+.link {
+    display: inline-block;
+    border-radius: 10%;
+    padding: 15px 25px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+}
