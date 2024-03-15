@@ -1,5 +1,6 @@
-//make login page with Using NextAuth signIn credentials (email, password)
-import { useRef, useState } from 'react';
+"use client";
+
+import { useRef } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 
