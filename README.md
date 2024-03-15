@@ -5,5 +5,6 @@ Use Prisma + MongoDB + Next-Auth
 ### How to install
 ```
 npm install --save-dev
+npx prisma db push
 npx prisma generate
 ```
