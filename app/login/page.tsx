@@ -7,22 +7,17 @@ export default function LoginPage() {
     const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
+
         const formData = new FormData(event.currentTarget);
         const email = formData.get('email');
         const pw = formData.get('password');
 
         const result = await signIn('credentials', {
-            redirect: true,
-            callbackUrl: '/',
             username: email,
             password: pw,
+            redirect: true,
+            callbackUrl: "/",
         });
-
-        if (result.error) {
-            console.log(result.error);
-        } else {
-            console.log(result);
-        }
     };
 
     const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
