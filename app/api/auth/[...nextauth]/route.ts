@@ -8,10 +8,10 @@ const handler = NextAuth({
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                username: { label: "Email", type: "text", placeholder: "Email Address" },
+                username: { label: "Email", type: "text" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 const res = await fetch(`${process.env.NEXTAUTH_URL}/api/login`, {
                     method: "POST",
                     headers: {
@@ -23,22 +23,35 @@ const handler = NextAuth({
                     }),
                 });
                 const user = await res.json();
-                if (user) {
-                    return Promise.resolve(user);
-                } else {
-                    return Promise.resolve(null);
-                }
+                return Promise.resolve(user);
             }
         }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         }),
+        KakaoProvider({
+            clientId: process.env.KAKAO_CLIENT_ID!,
+            clientSecret: process.env.NEXTAUTH_SECRET!,
+        }),
+
     ],
     pages: {
         signIn: "/login",
     },
-    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+        strategy: "jwt",
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            return { ...token, ...user };
+        },
+
+        async session({ session, token }) {
+            session.user = token as any;
+            return session;
+        },
+    },
 })
 
 export { handler as GET, handler as POST }

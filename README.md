@@ -1,6 +1,4 @@
 
-<div align="center">
-
 # Character Chatbot
 
 ### Character Chatbot Web Service using NextJS  
@@ -21,18 +19,16 @@ npm install --save-dev
 ### 2. Make .env File in Project Directory
 ```
 # check .env.sample
-DATABASE_URL=
-NEXTAUTH_URL=
-NEXTAUTH_SECRET=
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
+DATABASE_URL= # MONGODB URL
+NEXTAUTH_URL= # YOUR PUBLISH URL
+NEXTAUTH_SECRET= # NEXTAUTH SECRET/KAKAO SECRET
+GOOGLE_CLIENT_ID= # GOOGLE : API KEY
+GOOGLE_CLIENT_SECRET= # GOOGLE : API SECRET
+KAKAO_CLIENT_ID= # KAKAO : JAVASCRIPT API
+JWT_KEY= # JSONWEBTOKEN : SECRET KEY
+MAIL_AUTH= #NODEMIALER : GMAIL
+MAIL_PASS= #NODEMAILER : APP PASSWORD
 ```
-> DATABASE_URL={your mongodb uri}  
-> NEXTAUTH_URL={your deploy url. ex:localhost:3000}  
-> NEXTAUTH_SECRET={secret like base64}  
-> GOOGLE_CLIENT_ID={Google API Key}  
-> GOOGLE_CLIENT_SECRET={Goolge API Secret}  
-
 
 ### 3. Set Prisma Client
 ```console
@@ -60,4 +56,8 @@ login auth route tool
 #### bcrypt
 login password hashing tool
 
-</div>
+#### jsonwebtoken
+session jwt tool
+
+#### nodemailer
+email sender for Sign Up Page Link

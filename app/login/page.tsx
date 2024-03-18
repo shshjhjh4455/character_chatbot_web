@@ -1,25 +1,50 @@
 "use client";
 
-import { useRef } from 'react';
 import { signIn } from 'next-auth/react';
-import Link from 'next/link';
+import { FormEvent } from 'react';
 
 export default function LoginPage() {
-    const emailRef = useRef(null);
-    const pwRef = useRef(null);
+    const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-    const handleLogin = async () => {
+        const formData = new FormData(event.currentTarget);
+        const email = formData.get('email');
+        const pw = formData.get('password');
+
         const result = await signIn('credentials', {
             redirect: true,
             callbackUrl: '/',
-            username : emailRef.current,
-            password : pwRef.current,
+            username: email,
+            password: pw,
         });
 
         if (result.error) {
             console.log(result.error);
         } else {
             console.log(result);
+        }
+    };
+
+    const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const email = formData.get('signup-email');
+
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+        console.log(JSON.stringify({ email }));
+
+        if (response.ok) {
+            console.log('Email sent successfully');
+            formData.delete('signup-email');
+        } else {
+            console.log('Failed to send email');
         }
     };
 
@@ -30,19 +55,30 @@ export default function LoginPage() {
                 <input
                     type="email"
                     placeholder="Email"
-                    ref={emailRef}
+                    name="email"
+                    required
                 />
                 <input
                     type="password"
                     placeholder="Password"
-                    ref={pwRef}
+                    name="password"
+                    required
                 />
                 <button type="submit">Login</button>
             </form>
-            <hr/>
-            <button onClick={() => signIn("google", { redirect : true, callbackUrl : '/' })}>Login with Google</button>
-            <br/><br/><br/>
-            <Link href="/signup">Create an account free!</Link>
+            <hr />
+            <button onClick={() => signIn("google", { redirect: true, callbackUrl: '/' })}>Login with Google</button>
+            <button onClick={() => signIn("kakao", { redirect: true, callbackUrl: '/' })}>Login with KakaoTalk</button>
+            <br /><br /><hr /><br /><br />
+            <form onSubmit={handleSignUp}>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    name="signup-email"
+                    required
+                />
+                <button type="submit">Send Sign Up Link</button>
+            </form>
         </div>
     );
 };
