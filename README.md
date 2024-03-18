@@ -18,13 +18,7 @@
 npm install --save-dev
 ```
 
-### 2. Set Prisma Client
-```console
-npx prisma db push
-npx prisma generate
-```
-
-### 3. Make .env File in Project Directory
+### 2. Make .env File in Project Directory
 ```
 # check .env.sample
 DATABASE_URL=
@@ -38,6 +32,13 @@ GOOGLE_CLIENT_SECRET=
 > NEXTAUTH_SECRET={secret like base64}  
 > GOOGLE_CLIENT_ID={Google API Key}  
 > GOOGLE_CLIENT_SECRET={Goolge API Secret}  
+
+
+### 3. Set Prisma Client
+```console
+npx prisma db push
+npx prisma generate
+```
 
 ### 4. Run Project
 ```console
