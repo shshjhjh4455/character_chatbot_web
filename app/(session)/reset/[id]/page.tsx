@@ -2,6 +2,7 @@
 
 import { FormEvent } from "react";
 import { signIn } from "next-auth/react";
+import { checkPW, checkPWMatch } from "../../../utils/check";
 
 interface emailParams {
     params: { id: string }
@@ -15,6 +16,16 @@ export default function ResetPassword({ params }: emailParams) {
 
         const formData = new FormData(event.currentTarget);
         const pw = formData.get('password');
+        const pwCheck = formData.get('password-check');
+
+        const pwResult = await checkPW(pw as string);
+        if (pwResult !== "ok") {
+            return console.log(pwResult);
+        }
+        const pwMatchResult = await checkPWMatch(pw as string, pwCheck as string);
+        if (pwMatchResult !== "ok") {
+            return console.log(pwMatchResult);
+        }
 
         const result = await fetch(`/api/auth/user/reset`, {
             method: "POST",
