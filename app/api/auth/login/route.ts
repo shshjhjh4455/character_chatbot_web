@@ -3,7 +3,7 @@ import { prisma } from "../../../utils/prisma";
 import bcrypt from "bcryptjs";
 
 interface Req {
-    email: string;
+    username: string;
     password: string;
 }
 
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
     const user = await prisma.user.findFirst({
         where: {
-            email: body.email,
+            email: body.username,
         },
     });
 

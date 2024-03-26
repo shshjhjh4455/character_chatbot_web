@@ -33,12 +33,35 @@ export default function LoginPage() {
             },
             body: JSON.stringify({ email }),
         });
-        console.log(JSON.stringify({ email }));
-
-        if (response.ok) {
-            console.log('Email sent successfully');
+        const json = await response.json();
+        if (json.status === 200) {
+            console.log('Email sent');
             formData.delete('signup-email');
         } else {
+            formData.delete('signup-email');
+            console.log('Failed to send email');
+        }
+    };
+
+    const handleForgot = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const email = formData.get('forgot-password');
+
+        const response = await fetch('/api/contact/reset', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+        const json = await response.json();
+        if (json.status === 200) {
+            console.log('Email sent');
+            formData.delete('forgot-password');
+        } else {
+            formData.delete('forgot-password');
             console.log('Failed to send email');
         }
     };
@@ -62,9 +85,19 @@ export default function LoginPage() {
                 <button type="submit">Login</button>
             </form>
             <hr />
+            <form onSubmit={handleForgot}>
+                <input
+                    type="email"
+                    placeholder="Reset Password Email"
+                    name="forgot-password"
+                    required
+                />
+                <button type="submit">Send Email to reset Password!</button>
+            </form>
+            <hr />
             <button onClick={() => signIn("google", { redirect: true, callbackUrl: '/' })}>Login with Google</button>
             <button onClick={() => signIn("kakao", { redirect: true, callbackUrl: '/' })}>Login with KakaoTalk</button>
-            <br /><br /><hr /><br /><br />
+            <hr/>
             <form onSubmit={handleSignUp}>
                 <input
                     type="email"

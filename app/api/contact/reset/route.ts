@@ -1,9 +1,9 @@
-import { sendEmail } from '../../utils/email';
+import { sendEmailForgot } from '../../../utils/email';
 
 export async function POST(req: Request) {
     const body = await req.json();
 
-    return await sendEmail(body.email)
+    return await sendEmailForgot(body.email)
         .then(
             (val) =>{
                 if (val === 409) return new Response(JSON.stringify({ status: 409 }));
