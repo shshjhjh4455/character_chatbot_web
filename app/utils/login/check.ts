@@ -1,4 +1,4 @@
-export async function checkPW(password : string) {
+export function checkPW(password : string) {
     if (password.length < 8) {
         return "Password must be at least 8 characters long";
     }
@@ -20,9 +20,16 @@ export async function checkPW(password : string) {
     return "ok";
 }
 
-export async function checkPWMatch(password : string, confirmPassword : string) {
+export function checkPWMatch(password : string, confirmPassword : string) {
     if (password !== confirmPassword) {
         return "Passwords do not match";
+    }
+    return "ok";
+}
+
+export function checkEmail(email : string) {
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+        return "Invalid email address";
     }
     return "ok";
 }

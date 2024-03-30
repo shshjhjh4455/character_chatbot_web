@@ -6,8 +6,7 @@ export async function POST(req: Request) {
     return await sendEmailForgot(body.email)
         .then(
             (val) =>{
-                if (val === 409) return new Response(JSON.stringify({ status: 409 }));
-                else return new Response(JSON.stringify({ status: 200 }));
+                return new Response(JSON.stringify({ status: val }));
             }
         )
         .catch((error) => {

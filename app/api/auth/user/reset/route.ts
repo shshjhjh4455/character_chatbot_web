@@ -1,5 +1,4 @@
-import { prisma } from '../../../../utils/prisma'
-import bcrypt from 'bcryptjs'
+import { updatePassword } from '../../../../utils/userdb';
 
 interface Req {
     email: string;
@@ -9,14 +8,7 @@ interface Req {
 export async function POST(request: Request) {
     const body: Req = await request.json()
 
-    const user = await prisma.user.update({
-        where: {
-            email: body.email,
-        },
-        data: {
-            password: await bcrypt.hash(body.password, 10),
-        },
-    })
+    const user = await updatePassword(body.email, body.password);
 
     const { password, ...result } = user
     return new Response(JSON.stringify(result))

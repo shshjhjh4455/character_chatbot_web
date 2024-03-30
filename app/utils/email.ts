@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
-import { prisma } from './prisma';
+import { findUser } from './userdb';
+import { checkEmail } from './login/check';
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -9,20 +10,12 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-async function isEmailExist(email : string) {
-    const user = await prisma.user.findFirst({
-        where: {
-            email: email,
-        },
-    });
-    if(user) {
-        return true;
-    }
-    return false;
-}
-
 export async function sendEmail(email : string) {
-    if(await isEmailExist(email)) {//already exist email
+    if(await checkEmail(email) != "ok") {//invalid email
+        console.log("Invalid Email");
+        return 400;
+    }
+    if(await findUser(email)) {//already exist email
         console.log("Email already exist");
         return 409;
     }
@@ -44,7 +37,7 @@ export async function sendEmail(email : string) {
 }
 
 export async function sendEmailForgot(email : string) {
-    if(await !isEmailExist(email)) {//user not exist
+    if(await !findUser(email)) {//user not exist
         console.log("Email not exist");
         return 409;
     }

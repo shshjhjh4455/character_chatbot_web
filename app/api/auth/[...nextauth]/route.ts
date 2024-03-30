@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import KakaoProvider from "next-auth/providers/kakao"
 import CredentialsProvider from "next-auth/providers/credentials"
+import { checkEmail } from "../../../utils/login/check"
 
 const handler = NextAuth({
     providers: [
@@ -48,14 +49,23 @@ const handler = NextAuth({
         strategy: "jwt",
     },
     callbacks: {
-        async jwt({ token, user }) {
-            return { ...token, ...user };
+        async jwt({ token, user}) {
+            return { ...token, ...user};
         },
 
         async session({ session, token }) {
             session.user = token as any;
-            console.log(session);
             return session;
+        },
+
+        async signIn({user, account}) {
+            if(account.provider != "credentials") {
+                return true;
+            }
+            if(checkEmail(user.email) != "ok") {
+                return false;
+            }
+            return true;
         },
     },
 })

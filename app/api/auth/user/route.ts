@@ -1,5 +1,4 @@
-import { prisma } from '../../../utils/prisma'
-import bcrypt from 'bcryptjs'
+import { createUser } from '../../../utils/userdb';
 
 interface Req {
     name: string;
@@ -12,15 +11,7 @@ interface Req {
 export async function POST(request: Request) {
     const body: Req = await request.json()
 
-    const user = await prisma.user.create({
-        data: {
-            name: body.name,
-            email: body.email,
-            password: await bcrypt.hash(body.password, 10),
-            age: body.age,
-            gender: body.gender
-        },
-    })
+    const user = await createUser(body.name, body.email, body.password, body.age, body.gender);
 
     const { password, ...result } = user
     return new Response(JSON.stringify(result))
