@@ -1,64 +1,24 @@
 "use client";
 
-import { FormEvent } from "react";
-import { signIn } from "next-auth/react";
-import { checkPW, checkPWMatch } from "../../../utils/check";
+import { handleSignUp } from "../../../utils/login/handle";
 
 interface emailParams {
     params: { id: string }
 }
 
 export default function SignUpPage({ params }: emailParams) {
-
     const email = atob(decodeURIComponent(params.id));
-    const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        const formData = new FormData(event.currentTarget);
-        const pw = formData.get('password');
-        const pwCheck = formData.get('password-check');
-
-        const pwResult = await checkPW(pw as string);
-        if (pwResult !== "ok") {
-            return console.log(pwResult);
-        }
-        const pwMatchResult = await checkPWMatch(pw as string, pwCheck as string);
-        if (pwMatchResult !== "ok") {
-            return console.log(pwMatchResult);
-        }
-        
-        const result = await fetch(`/api/auth/user`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: formData.get('name'),
-                email: email,
-                password: pw,
-                age: Number(formData.get('age')),
-                gender: formData.get('gender')
-            }),
-        });
-
-        const user = await result.json();
-        if (user) {
-            await signIn('credentials', {
-                username: email,
-                password: pw,
-                redirect: true,
-                callbackUrl: "/",
-            });
-        }
-        else {
-            return console.log("Failed to sign up");
-        }
-    };
 
     return (
         <div>
             <h1>Sign Up</h1>
             <form onSubmit={handleSignUp}>
+                <input
+                    type="email"
+                    value={email}
+                    name="email"
+                    readOnly
+                /><br />
                 <input
                     type="text"
                     placeholder="username"

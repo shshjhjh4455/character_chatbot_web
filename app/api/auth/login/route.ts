@@ -1,4 +1,4 @@
-import { signJWT } from "../../../utils/jwt";
+import { signJWT } from "../../../utils/login/jwt";
 import { prisma } from "../../../utils/prisma";
 import bcrypt from "bcryptjs";
 
