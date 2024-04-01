@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import { FormEvent } from "react";
 import { checkPW, checkPWMatch } from "./check";
 
-// Sign in with email and password. Redirects to home page.
+// Sign in with email and password = credentialsprovider. Redirects to home page.
 export async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -111,7 +111,7 @@ export async function handleReset(event: FormEvent<HTMLFormElement>) {
     }
 };
 
-// Sign up. When Sign Up button is clicked, user is signed up and signed in. Redirects to home page.
+// Use CredentialsProvider to sign Up . When Sign Up button is clicked, user is signed up and signed in. Redirects to home page.
 export async function handleSignUp(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -138,8 +138,7 @@ export async function handleSignUp(event: FormEvent<HTMLFormElement>) {
             name: formData.get('name'),
             email: email,
             password: pw,
-            age: Number(formData.get('age')),
-            gender: formData.get('gender')
+            provider: "credentials"
         }),
     });
 

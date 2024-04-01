@@ -1,16 +1,17 @@
-import { findUser } from "../../../utils/userdb";
-import { signJWT } from "../../../utils/login/jwt";
+import { findUserProvider } from "app/utils/userdb";
+import { signJWT } from "app/utils/login/jwt";
 import bcrypt from "bcryptjs";
 
 interface Req {
     username: string;
     password: string;
+    provider: string;
 }
 
 export async function POST(request: Request) {
     const body: Req = await request.json();
 
-    const user = await findUser(body.username);
+    const user = await findUserProvider(body.username, body.provider);
 
     if (user && (await bcrypt.compare(body.password, user.password))) {
         const { password, ...userWithoutPass } = user;

@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import KakaoProvider from "next-auth/providers/kakao"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { checkEmail } from "../../../utils/login/check"
+import { findUserProvider } from "app/utils/userdb"
 
 const handler = NextAuth({
     providers: [
@@ -21,6 +21,7 @@ const handler = NextAuth({
                     body: JSON.stringify({
                         username: req?.username,
                         password: req?.password,
+                        provider: "credentials",
                     }),
                 });
                 const user = await res.json();
@@ -49,8 +50,16 @@ const handler = NextAuth({
         strategy: "jwt",
     },
     callbacks: {
-        async jwt({ token, user}) {
-            return { ...token, ...user};
+        async jwt({ token, user }) {
+            if(!token?.provider && token) {
+                if(!token?.picture) {
+                    token.provider = "kakao";
+                }
+                else {
+                    token.provider = "google";
+                }
+            }
+            return {...token, ...user };
         },
 
         async session({ session, token }) {
@@ -58,12 +67,26 @@ const handler = NextAuth({
             return session;
         },
 
-        async signIn({user, account}) {
-            if(account.provider != "credentials") {
+        async signIn({ user, account }) {
+            const search = await findUserProvider(user.email, account.provider);
+            if (!search && account.provider !== "credentials") {
+                // Create OAuth user if not found
+                const fet = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/user/oauth`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        name: user.name,
+                        email: user.email,
+                        provider: account.provider,
+                    }),
+                });
+                const res = await fet.json();
+                if (res.status != 200) {
+                    return false;
+                }
                 return true;
-            }
-            if(checkEmail(user.email) != "ok") {
-                return false;
             }
             return true;
         },

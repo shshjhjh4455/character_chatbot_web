@@ -1,10 +1,11 @@
 import { prisma } from "./prisma";
 import bcrypt from 'bcryptjs'
 
-export async function findUser(email : string) {
+export async function findUserProvider(email : string, provider : string) {
     return prisma.user.findFirst({
         where: {
             email: email,
+            provider: provider,
         },
     });
 }
@@ -12,7 +13,10 @@ export async function findUser(email : string) {
 export async function updatePassword(email : string ,password : string) {
     return prisma.user.update({
         where: {
-            email: email,
+            email_provider: {
+                email: email,
+                provider: "credentials",
+            },
         },
         data: {
             password: await bcrypt.hash(password, 10),
@@ -20,14 +24,23 @@ export async function updatePassword(email : string ,password : string) {
     })
 }
 
-export async function createUser(name : string, email : string, password : string, age : number, gender : string) {
+export async function createUser(name : string, email : string, password : string, provider : string) {
     return prisma.user.create({
         data: {
             name: name,
             email: email,
             password: await bcrypt.hash(password, 10),
-            age: age,
-            gender: gender
+            provider: provider,
+        },
+    })
+}
+
+export async function createOAuthUser(name : string, email : string, provider : string) {
+    return prisma.user.create({
+        data: {
+            name: name,
+            email: email,
+            provider: provider,
         },
     })
 }

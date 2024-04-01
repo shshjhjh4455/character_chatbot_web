@@ -1,6 +1,6 @@
 "use client";
 
-import { handleReset } from "../../../utils/login/handle";
+import { handleReset } from "app/utils/login/handle";
 
 interface emailParams {
     params: { id: string }
