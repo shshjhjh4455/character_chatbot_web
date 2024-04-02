@@ -14,10 +14,43 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String?
-  email     String   @unique
-  password  String
-  age       Int
-  gender    String?
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String
+  password       String?
+  provider       String
+  chatrooms      ChatRoom[]   @relation()
+
+  @@unique([email, provider])
+}
+
+model ChatBot {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  description    String
+  image          String
+  chatrooms      ChatRoom[]   @relation()
+}
+
+model ChatRoom {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  chatbotId      String?
+  userId         String?
+  createAt       DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt @db.Date
+  messages       Message[]
+
+  user           User?      @relation(fields : [userId], references: [id])
+  chatbot        ChatBot?   @relation(fields : [chatbotId], references : [id])
+}
+
+model Message {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  role           String
+  createAt       DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  msg            String
+  chatroomId     String?
+
+  chatroom       ChatRoom?  @relation(fields : [chatroomId], references : [id])
 }
