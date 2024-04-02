@@ -83,9 +83,6 @@ const handler = NextAuth({
                     }),
                 });
                 const res = await fet.json();
-                if (res.status != 200) {
-                    return false;
-                }
                 return true;
             }
             return true;
