@@ -1,9 +1,9 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
-import styles from "../styles/home.module.css";
+import styles from "styles/home.module.css";
 
 export default function Login() {
-    const { data: session } = useSession();
+    const { data : session } = useSession();
 
     if (session && session.user) {
         return (

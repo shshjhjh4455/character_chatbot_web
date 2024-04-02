@@ -1,20 +1,17 @@
-import { signJWT } from "../../../utils/jwt";
-import { prisma } from "../../../utils/prisma";
+import { findUserProvider } from "app/utils/userdb";
+import { signJWT } from "app/utils/login/jwt";
 import bcrypt from "bcryptjs";
 
 interface Req {
-    email: string;
+    username: string;
     password: string;
+    provider: string;
 }
 
 export async function POST(request: Request) {
     const body: Req = await request.json();
 
-    const user = await prisma.user.findFirst({
-        where: {
-            email: body.email,
-        },
-    });
+    const user = await findUserProvider(body.username, body.provider);
 
     if (user && (await bcrypt.compare(body.password, user.password))) {
         const { password, ...userWithoutPass } = user;
