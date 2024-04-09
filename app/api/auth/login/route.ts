@@ -1,5 +1,4 @@
 import { findUserProvider } from "app/utils/userdb";
-import { signJWT } from "app/utils/login/jwt";
 import bcrypt from "bcryptjs";
 
 interface Req {
@@ -15,10 +14,8 @@ export async function POST(request: Request) {
 
     if (user && (await bcrypt.compare(body.password, user.password))) {
         const { password, ...userWithoutPass } = user;
-        const accessToken = signJWT(userWithoutPass);
         const result = {
             ...userWithoutPass,
-            accessToken,
         };
         return new Response(JSON.stringify(result));
     } else return new Response(JSON.stringify(null));
