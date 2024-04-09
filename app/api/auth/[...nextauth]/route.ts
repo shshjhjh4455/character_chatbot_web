@@ -1,10 +1,11 @@
-import NextAuth from "next-auth"
+import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import KakaoProvider from "next-auth/providers/kakao"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { findUserProvider } from "app/utils/userdb"
+//import jwt, { JwtPayload } from "jsonwebtoken";
 
-const handler = NextAuth({
+const authOptions : NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -48,18 +49,23 @@ const handler = NextAuth({
     },
     session: {
         strategy: "jwt",
+        maxAge: 24 * 60 * 60,
+        updateAge: 6 * 60,
     },
+    secret: process.env.NEXTAUTH_SECRET!,
     callbacks: {
-        async jwt({ token, user }) {
-            if(!token?.provider && token) {
-                if(!token?.picture) {
-                    token.provider = "kakao";
+        async jwt({ token, user, account }) {
+            if(account) {
+                token.id = user.id;
+                if (account.provider !== "credentials") {
+                    const find = await findUserProvider(user.email, account.provider);
+                    token.id = find.id;
                 }
-                else {
-                    token.provider = "google";
-                }
+                token.email = user.email;
+                token.name = user.name;
+                token.provider = account.provider;
             }
-            return {...token, ...user };
+            return token;
         },
 
         async session({ session, token }) {
@@ -82,12 +88,13 @@ const handler = NextAuth({
                         provider: account.provider,
                     }),
                 });
-                const res = await fet.json();
                 return true;
             }
             return true;
         },
     },
-})
+};
 
-export { handler as GET, handler as POST }
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST, authOptions }
