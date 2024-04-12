@@ -6,7 +6,7 @@ export async function findMessageByChatroomId(chatroomId : string) {
             chatroomId: chatroomId,
         },
         orderBy: {
-            createAt: "asc",
+            createAt: "desc",
         },
         select: {
             id: true,
@@ -34,6 +34,7 @@ export async function isUserInChatroom(email : string, provider : string, chatro
     });
 }
 
+// Get the user name of a chatroom
 export async function getUserName(chatroomId : string) {
     const name = await prisma.chatRoom.findFirst({
         where: {
@@ -53,6 +54,8 @@ export async function getUserName(chatroomId : string) {
     return name;
 }
 
+
+// Get the chatbot name of a chatroom
 export async function getChatbotName(chatroomId : string) {
     const name = await prisma.chatRoom.findFirst({
         where: {
@@ -72,15 +75,55 @@ export async function getChatbotName(chatroomId : string) {
     return name;
 }
 
+// Get all chatrooms of a user, with the latest message
 export async function getChatRooms(id : string) {
     return await prisma.user.findFirst({
         where: {
             id: id,
         },
         select: {
-            chatrooms: true
+            chatrooms: {
+                select: {
+                    id: true,
+                    messages: {
+                        select: {
+                            msg: true,
+                        },
+                        orderBy: {
+                            createAt: "desc",
+                        },
+                    },
+                },
+            }
         }
     }).then((res) => {
         return res.chatrooms;
     });
+}
+
+// Create a new Message
+export async function createMessage(chatroomId : string, role : string, msg : string) {
+    const send = await prisma.message.create({
+        data: {
+            chatroomId: chatroomId,
+            role: role,
+            msg: msg,
+        },
+    }).then((res) => {
+        if (res.id !== null) {
+            return true;
+        }
+        return false;
+    });
+
+    const update = await prisma.chatRoom.update({
+        where: {
+            id: chatroomId,
+        },
+        data: {
+            updatedAt: new Date(),
+        },
+    });
+
+    return { send, update };
 }

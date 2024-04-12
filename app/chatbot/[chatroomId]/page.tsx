@@ -2,6 +2,7 @@ import ChatBox from "components/chatbox";
 import ChatRoomList from "components/chatroomlist";
 import ChatBotName from "components/chatbotname";
 import { Suspense } from "react";
+import ChatInput from "components/chatinput";
 
 interface ChatbotPageProps {
     params: {
@@ -19,10 +20,7 @@ export default function ChatbotPage({ params: { chatroomId } }: ChatbotPageProps
             </div>
             <div style={{flex : 2}}>
                 <center>
-                    <form>
-                        <input size={50} type="text" />
-                        <button type="submit">Send</button>
-                    </form>
+                    <ChatInput chatroomId={chatroomId} />
                 </center>
             </div>
         </div>

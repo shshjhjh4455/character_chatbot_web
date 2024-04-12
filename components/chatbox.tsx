@@ -26,15 +26,14 @@ export default async function ChatBox({ chatroomId }: { chatroomId: string }) {
     const botName = await getChatbotName(chatroomId);
 
     return (
-        <div style={{ flex: 7, padding: '5px' }}>
+        <div style={{ flex: 7, padding: '5px', display: 'flex', flexDirection: "column-reverse", height: '300px', maxHeight: '300px', overflowY: 'scroll' }}>
             {messages.map((msg: any, i) => (
-                <>
-                    <div key={i} style={styles[msg.role]}>
+                <div key={i} style={{ flex : 3 }}>
+                    <div style={styles[msg.role]}>
                         <div>{msg.role === 'user' ? userName : botName}</div>
                         <div>{msg.msg}</div>
                     </div>
-                    <br/><br/><br/>
-                </>
+                </div>
             ))}
         </div>
     );
