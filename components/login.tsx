@@ -13,7 +13,6 @@ export default function Login() {
         <button onClick={() => signOut()}>
           {session.user.name}님 Log Out
         </button>
-        <input type="button"onClick={() => router.push("/chatbot") } value="chat"/>
       </div>
            
         );

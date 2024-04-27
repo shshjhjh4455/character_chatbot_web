@@ -19,7 +19,7 @@ model User {
   email          String
   password       String?
   provider       String
-  chatrooms      ChatRoom[]   @relation()
+  chatrooms      ChatRoom[]
 
   @@unique([email, provider])
 }
@@ -29,7 +29,7 @@ model ChatBot {
   name           String
   description    String
   image          String
-  chatrooms      ChatRoom[]   @relation()
+  chatrooms      ChatRoom[]
 }
 
 model ChatRoom {
@@ -42,6 +42,8 @@ model ChatRoom {
 
   user           User?      @relation(fields : [userId], references: [id])
   chatbot        ChatBot?   @relation(fields : [chatbotId], references : [id])
+
+  @@unique([chatbotId, userId])
 }
 
 model Message {
