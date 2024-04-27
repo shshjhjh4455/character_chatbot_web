@@ -4,6 +4,15 @@ import { signIn } from "next-auth/react";
 import { FormEvent } from "react";
 import { checkPW, checkPWMatch } from "./check";
 
+import { useSelectedLayoutSegments } from 'next/navigation';
+//import router from "next/router";
+import { useRouter } from 'next/router';
+
+export async function handleChat() {
+    const router = useRouter();
+    await router.push('components/chat');
+}
+
 // Sign in with email and password = credentialsprovider. Redirects to home page.
 export async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -154,4 +163,5 @@ export async function handleSignUp(event: FormEvent<HTMLFormElement>) {
     else {
         return console.log("Failed to sign up");
     }
+    
 };

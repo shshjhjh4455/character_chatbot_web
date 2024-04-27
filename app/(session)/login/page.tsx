@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from 'next-auth/react';
-import { handleLogin, handleForgot, handleEmail } from 'app/utils/login/handle';
+import { handleLogin, handleForgot, handleEmail} from 'app/utils/login/handle';
 
 export default function LoginPage() {
     return (
@@ -47,4 +47,4 @@ export default function LoginPage() {
             </form>
         </div>
     );
-};
+}
