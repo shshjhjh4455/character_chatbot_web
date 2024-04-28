@@ -6,21 +6,21 @@ import ChatInput from "components/chatinput";
 
 interface ChatbotPageProps {
     params: {
-        chatroomId: string;
+        chatbotId: string;
     }
 }
 
-export default function ChatbotPage({ params: { chatroomId } }: ChatbotPageProps) {
+export default function ChatbotPage({ params: { chatbotId } }: ChatbotPageProps) {
     return (
         <div style={{ display: "flex", flexDirection: "column"}}>
-            <center><Suspense fallback={<div>loading...</div>}> <ChatBotName chatroomId={chatroomId}/> </Suspense></center>
+            <center><Suspense fallback={<div>loading...</div>}> <ChatBotName chatroomId={chatbotId}/> </Suspense></center>
             <div style={{ flex: 8, display: "flex", flexDirection: "row" }}>
-                <Suspense fallback={<div>loading...</div>}> <ChatBox chatroomId={chatroomId}/> </Suspense>
+                <Suspense fallback={<div>loading...</div>}> <ChatBox chatroomId={chatbotId}/> </Suspense>
                 <Suspense fallback={<div>loading...</div>}> <ChatRoomList /> </Suspense>
             </div>
             <div style={{flex : 2}}>
                 <center>
-                    <ChatInput chatroomId={chatroomId} />
+                    <ChatInput chatroomId={chatbotId} />
                 </center>
             </div>
         </div>

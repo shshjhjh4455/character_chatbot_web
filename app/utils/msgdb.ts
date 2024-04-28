@@ -1,6 +1,27 @@
 import { prisma } from "./prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "app/api/auth/[...nextauth]/route";
 
-export async function findMessageByChatroomId(chatroomId : string) {
+async function findChatroomId(chatbotId : string) {
+    const session = await getServerSession(authOptions);
+    const uid = session.user.id;
+
+    const id = await prisma.chatRoom.findFirst({
+        where: {
+            chatbotId: chatbotId,
+            userId: uid,
+        },
+        select: {
+            id: true,
+        },
+    });
+
+    return id?.id;
+}
+
+export async function findMessageByChatroomId(chatbotId : string) {
+    const chatroomId = await findChatroomId(chatbotId);
+
     return await prisma.message.findMany({
         where: {
             chatroomId: chatroomId,
@@ -16,7 +37,9 @@ export async function findMessageByChatroomId(chatroomId : string) {
     });
 }
 
-export async function isUserInChatroom(email : string, provider : string, chatroomId : string) {
+export async function isUserInChatroom(email : string, provider : string, chatbotId : string) {
+    const chatroomId = await findChatroomId(chatbotId);
+
     return prisma.chatRoom.findFirst({
         where: {
             id: chatroomId,
@@ -35,7 +58,9 @@ export async function isUserInChatroom(email : string, provider : string, chatro
 }
 
 // Get the user name of a chatroom
-export async function getUserName(chatroomId : string) {
+export async function getUserName(chatbotId : string) {
+    const chatroomId = await findChatroomId(chatbotId);
+
     const name = await prisma.chatRoom.findFirst({
         where: {
             id: chatroomId,
@@ -56,20 +81,16 @@ export async function getUserName(chatroomId : string) {
 
 
 // Get the chatbot name of a chatroom
-export async function getChatbotName(chatroomId : string) {
-    const name = await prisma.chatRoom.findFirst({
+export async function getChatbotName(chatbotId : string) {
+    const name = await prisma.chatBot.findFirst({
         where: {
-            id: chatroomId,
+            id: chatbotId,
         },
-        select : {
-            chatbot: {
-                select: {
-                    name: true,
-                },
-            },
+        select: {
+            name: true,
         },
     }).then((res) => {
-        return res.chatbot.name;
+        return res.name;
     });
 
     return name;
@@ -85,12 +106,18 @@ export async function getChatRooms(id : string) {
             chatrooms: {
                 select: {
                     id: true,
+                    chatbotId: true,
                     messages: {
                         select: {
                             msg: true,
                         },
                         orderBy: {
                             createAt: "desc",
+                        },
+                    },
+                    chatbot: {
+                        select: {
+                            name: true,
                         },
                     },
                 },
@@ -102,7 +129,9 @@ export async function getChatRooms(id : string) {
 }
 
 // Create a new Message
-export async function createMessage(chatroomId : string, role : string, msg : string) {
+export async function createMessage(chatbotId : string, role : string, msg : string) {
+    const chatroomId = await findChatroomId(chatbotId);
+
     const send = await prisma.message.create({
         data: {
             chatroomId: chatroomId,

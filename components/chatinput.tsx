@@ -1,5 +1,4 @@
 "use client";
-
 export default function ChatInput({ chatroomId }: { chatroomId: string }) {
 
     const sendMessage = async (event : any) => {

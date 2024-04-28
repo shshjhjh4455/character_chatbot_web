@@ -9,7 +9,9 @@ export async function POST(req: Request) {
 
     const result = await createMessage(chatroomId, role, msg);
 
+
     if(result != null) {
+        await createMessage(chatroomId, 'chatbot', "Chatbot test msg");
         return new Response(JSON.stringify({ status: 200, body: "Message created" }));
     }
     return new Response(JSON.stringify({ status: 500, body: "Error" }));

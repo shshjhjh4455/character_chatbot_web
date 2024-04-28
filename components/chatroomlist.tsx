@@ -15,18 +15,12 @@ export default async function ChatRoomList() {
     const id = session.user.id;
     const chatrooms = await getChatRooms(id);
 
-    const chatroomNames = await Promise.all(
-        chatrooms.map(async (chatroom: any) => {
-            return await getChatbotName(chatroom.id); // 채팅방 이름 가져오는 비동기 함수
-        })
-    );
-
     return (
-        <div style={{ flex: 3, padding: '5px' }}>
-            {chatroomNames.map((chatroomName, i) => (
-                <div key={i} style={styles}>
-                    <Link prefetch href={`./${chatrooms[i].id}`}>{chatroomName}</Link>
-                    <p>Last msg : {chatrooms[i].messages[0].msg} </p>
+        <div style={{ flex: 3, padding: '5px', height: '300px', maxHeight: '300px', overflowY: 'scroll' }}>
+            {chatrooms.map((chatroom) => (
+                <div key={chatroom.chatbotId} style={styles}>
+                    <Link prefetch href={`./${chatroom.chatbotId}`}>{chatroom.chatbot.name}</Link>
+                    <p>Last msg : {chatroom.messages[0]?.msg} </p>
                 </div>
             ))}
         </div>
