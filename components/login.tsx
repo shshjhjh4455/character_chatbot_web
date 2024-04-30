@@ -9,12 +9,16 @@ export default function Login() {
 
     if (session && session.user) {
         return (
-            <div>
+        <div>
         <button onClick={() => signOut()}>
           {session.user.name}님 Log Out
         </button>
-      </div>
-           
+        
+        <button type = "button"onClick={()=>router.push('/chatrooms')}>
+        리스트로 ㄱ ㄱ
+        </button>
+        
+       </div>
         );
     }
 

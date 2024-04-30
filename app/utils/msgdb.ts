@@ -1,4 +1,5 @@
-import { prisma } from "./prisma";
+
+import  {prisma}  from "./prisma";
 export async function findMessageByChatroomId(chatroomId : string) {
     return await prisma.message.findMany({
         where: {
@@ -52,7 +53,7 @@ export async function getUserName(chatroomId : string) {
 }
 
 export async function getChatbotName(chatroomId : string) {
-    const name = await prisma.chatRoom.findFirst({
+    const name =await prisma.chatRoom.findFirst({
         where: {
             id: chatroomId,
         },
@@ -60,11 +61,12 @@ export async function getChatbotName(chatroomId : string) {
             chatbot: {
                 select: {
                     name: true,
+                    image: true,
                 },
             },
         },
     }).then((res) => {
-        return res.chatbot.name;
+        return res.chatbot.name
     });
 
     return name;
@@ -82,3 +84,15 @@ export async function getChatRooms(id : string) {
         return res.chatrooms;
     });
 }
+
+export async function getChatroomsByChatbotId(chatbotId: string) {
+    return await prisma.chatRoom.findMany({
+      where: {
+        chatbotId: chatbotId,
+      },
+      include: {
+        user: true,
+        chatbot: true,
+      },
+    });
+  }
