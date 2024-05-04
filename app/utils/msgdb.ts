@@ -1,6 +1,6 @@
-import { prisma } from "./prisma";
-import { getServerSession } from "next-auth";
 import { authOptions } from "app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import { prisma } from "./prisma";
 
 async function findChatroomId(chatbotId : string) {
     const session = await getServerSession(authOptions);
@@ -25,6 +25,39 @@ export async function findMessageByChatroomId(chatbotId : string) {
     return await prisma.message.findMany({
         where: {
             chatroomId: chatroomId,
+        },
+        orderBy: {
+            createAt: "desc",
+        },
+        select: {
+            id: true,
+            role: true,
+            msg: true,
+        },
+    });
+}
+
+export async function findNewMessageByChatroomId(chatbotId : string, lastMessageId : string) {
+    const chatroomId = await findChatroomId(chatbotId);
+    const lastDate = await prisma.message.findFirst({
+        where: {
+            id: lastMessageId,
+        },
+        select: {
+            createAt: true,
+        },
+    });
+
+    if (lastDate === null) {
+        return [];
+    }
+
+    return await prisma.message.findMany({
+        where: {
+            chatroomId: chatroomId,
+            createAt: {
+                gt: lastDate.createAt,
+            },
         },
         orderBy: {
             createAt: "desc",

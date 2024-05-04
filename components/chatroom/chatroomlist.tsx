@@ -1,5 +1,5 @@
 import { authOptions } from "app/api/auth/[...nextauth]/route";
-import { getChatRooms, getChatbotName } from "app/utils/msgdb";
+import { getChatRooms } from "app/utils/msgdb";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 

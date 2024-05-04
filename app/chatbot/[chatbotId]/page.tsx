@@ -1,26 +1,24 @@
-import ChatBox from "components/chatbox";
-import ChatRoomList from "components/chatroomlist";
-import ChatBotName from "components/chatbotname";
+import ChatBox from "components/chatroom/chatbox";
+import ChatRoomList from "components/chatroom/chatroomlist";
+import { getChatBot } from "app/utils/chatbotdb";
 import { Suspense } from "react";
-import ChatInput from "components/chatinput";
+import ChatInput from "components/chatroom/chatinput";
 
-interface ChatbotPageProps {
-    params: {
-        chatbotId: string;
-    }
-}
+export default async function ChatbotPage({params} : {params : {chatbotId : string}}) {
+    const chatbot = await getChatBot(params.chatbotId);
 
-export default function ChatbotPage({ params: { chatbotId } }: ChatbotPageProps) {
     return (
         <div style={{ display: "flex", flexDirection: "column"}}>
-            <center><Suspense fallback={<div>loading...</div>}> <ChatBotName chatroomId={chatbotId}/> </Suspense></center>
+            <center>
+                <h1>{chatbot.name}</h1>
+            </center>
             <div style={{ flex: 8, display: "flex", flexDirection: "row" }}>
-                <Suspense fallback={<div>loading...</div>}> <ChatBox chatroomId={chatbotId}/> </Suspense>
+                <Suspense fallback={<div>loading...</div>}> <ChatBox chatroomId={chatbot.id}/> </Suspense>
                 <Suspense fallback={<div>loading...</div>}> <ChatRoomList /> </Suspense>
             </div>
             <div style={{flex : 2}}>
                 <center>
-                    <ChatInput chatroomId={chatbotId} />
+                    <ChatInput chatroomId={chatbot.id} />
                 </center>
             </div>
         </div>
