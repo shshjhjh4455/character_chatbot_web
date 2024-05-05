@@ -130,7 +130,10 @@ export async function getChatbotName(chatbotId : string) {
 }
 
 // Get all chatrooms of a user, with the latest message
-export async function getChatRooms(id : string) {
+export async function getChatRooms() {
+    const session = await getServerSession(authOptions);
+    const id = session.user.id;
+
     return await prisma.user.findFirst({
         where: {
             id: id,

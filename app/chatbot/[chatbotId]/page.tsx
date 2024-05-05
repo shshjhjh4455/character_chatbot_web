@@ -1,7 +1,6 @@
 import ChatBox from "components/chatroom/chatbox";
 import ChatRoomList from "components/chatroom/chatroomlist";
 import { getChatBot } from "app/utils/chatbotdb";
-import { Suspense } from "react";
 import ChatInput from "components/chatroom/chatinput";
 
 export default async function ChatbotPage({params} : {params : {chatbotId : string}}) {
@@ -13,8 +12,8 @@ export default async function ChatbotPage({params} : {params : {chatbotId : stri
                 <h1>{chatbot.name}</h1>
             </center>
             <div style={{ flex: 8, display: "flex", flexDirection: "row" }}>
-                <Suspense fallback={<div>loading...</div>}> <ChatBox chatroomId={chatbot.id}/> </Suspense>
-                <Suspense fallback={<div>loading...</div>}> <ChatRoomList /> </Suspense>
+                <ChatBox chatBotId={chatbot.id}/>
+                <ChatRoomList />
             </div>
             <div style={{flex : 2}}>
                 <center>

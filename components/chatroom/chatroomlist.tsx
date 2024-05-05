@@ -1,9 +1,10 @@
-import { authOptions } from "app/api/auth/[...nextauth]/route";
-import { getChatRooms } from "app/utils/msgdb";
-import { getServerSession } from "next-auth";
-import Link from "next/link";
+"use client";
 
-export default async function ChatRoomList() {
+import Link from "next/link";
+import { useChatRooms } from "app/hooks/useChat";
+
+
+export default function ChatRoomList() {
     const styles = {
         backgroundColor: "#f0f0f0",
         margin: "5px",
@@ -11,9 +12,7 @@ export default async function ChatRoomList() {
         border: "1px solid #000",
     };
 
-    const session = await getServerSession(authOptions);
-    const id = session.user.id;
-    const chatrooms = await getChatRooms(id);
+    const chatrooms = useChatRooms().data?.chatrooms || [];
 
     return (
         <div style={{ flex: 3, padding: '5px', height: '300px', maxHeight: '300px', overflowY: 'scroll' }}>

@@ -1,6 +1,11 @@
 "use client";
 
+import { useChat, useChatRooms } from "app/hooks/useChat";
+
 export default function ChatInput({ chatroomId }: { chatroomId: string }) {
+
+    const { mutate } = useChat(chatroomId);
+    const chatrooms = useChatRooms();
 
     const sendMessage = async (event : any) => {
         event.preventDefault();
@@ -8,7 +13,7 @@ export default function ChatInput({ chatroomId }: { chatroomId: string }) {
         const chatroomId = event.target.chatroomId.value;
         const msg = event.target.msg.value;
         
-        const response = await fetch('/api/chat/send', {
+        const response = await fetch('/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -17,6 +22,8 @@ export default function ChatInput({ chatroomId }: { chatroomId: string }) {
         });
 
         event.target.msg.value = "";
+        mutate();
+        chatrooms.mutate();
     }
 
     return (

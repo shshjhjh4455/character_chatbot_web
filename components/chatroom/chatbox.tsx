@@ -1,6 +1,7 @@
-import { findMessageByChatroomId, getChatbotName, getUserName } from "app/utils/msgdb";
+"use client";
 
-export default async function ChatBox({ chatroomId }: { chatroomId: string }) {
+import { useChat } from "app/hooks/useChat";
+export default function ChatBox({ chatBotId }: { chatBotId: string }) {
     const styles = {
         user: {
             backgroundColor: "#ffff00",
@@ -20,17 +21,17 @@ export default async function ChatBox({ chatroomId }: { chatroomId: string }) {
         },
     };
 
-    const messages = await findMessageByChatroomId(chatroomId);
+    const { data, isLoading, isError, mutate } = useChat(chatBotId);
 
-    const userName = await getUserName(chatroomId);
-    const botName = await getChatbotName(chatroomId);
+    if (isLoading) return <div>loading...</div>;
+    if (isError) return <div>failed to load</div>;
 
     return (
         <div style={{ flex: 7, padding: '5px', display: 'flex', flexDirection: "column-reverse", height: '300px', maxHeight: '300px', overflowY: 'scroll' }}>
-            {messages.map((msg: any, i) => (
+            {data.messages.map((msg: any, i) => (
                 <div key={i} style={{ flex : 3 }}>
                     <div style={styles[msg.role]}>
-                        <div>{msg.role === 'user' ? userName : botName}</div>
+                        <div>{msg.role === 'user' ? data.user : data.bot}</div>
                         <div>{msg.msg}</div>
                     </div>
                 </div>

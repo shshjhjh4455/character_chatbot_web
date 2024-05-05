@@ -1,4 +1,16 @@
+import { findMessageByChatroomId, getChatRooms, getChatbotName, getUserName } from "app/utils/msgdb";
 import { createMessage } from "app/utils/msgdb";
+
+export async function GET(req: Request) {
+    const url = new URL(req.url);
+    const { searchParams } = url;
+    const chatBotId = searchParams.get('chatBotId');
+    const messages = await findMessageByChatroomId(chatBotId);
+    const user = await getUserName(chatBotId);
+    const bot = await getChatbotName(chatBotId);
+    
+    return new Response(JSON.stringify({ messages, user, bot }));
+}
 
 export async function POST(req: Request) {
     const body = await req.json();
