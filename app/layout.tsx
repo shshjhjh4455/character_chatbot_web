@@ -1,4 +1,4 @@
-import Provider from "components/provider"
+import Provider from "components/provider/sessionProvider"
 
 export const metadata = {
   title: 'Character Chatbot',

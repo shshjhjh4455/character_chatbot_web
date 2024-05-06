@@ -7,12 +7,18 @@ export default function Login() {
 
     if (session && session.user) {
         return (
-            <button
-                className={styles.link}
-                onClick={() => signOut()}
-            >
-                {session.user.name}님 Log Out
-            </button>
+            <>
+                <button
+                    className={styles.link}
+                    onClick={() => signOut()}
+                >
+                    {session.user.name}님 Log Out
+                </button>
+                <br />
+                <div>
+                    <a href="/chatbot">Start Chat With ChatBot!</a>
+                </div>
+            </>
         );
     }
 
