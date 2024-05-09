@@ -1,4 +1,4 @@
-import { prisma } from "./prisma";
+import { prisma } from "../prisma";
 import bcrypt from 'bcryptjs'
 
 export async function findUserProvider(email : string, provider : string) {

@@ -1,6 +1,6 @@
 import ChatBox from "components/chatroom/chatbox";
 import ChatRoomList from "components/chatroom/chatroomlist";
-import { getChatBot } from "app/utils/chatbotdb";
+import { getChatBot } from "app/utils/db/chatbotdb";
 import ChatInput from "components/chatroom/chatinput";
 
 export default async function ChatbotPage({params} : {params : {chatbotId : string}}) {

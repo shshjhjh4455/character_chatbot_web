@@ -1,4 +1,4 @@
-import { createOAuthUser, createChatrooms } from 'app/utils/userdb';
+import { createOAuthUser, createChatrooms } from 'app/utils/db/userdb';
 
 interface Req {
     name: string;

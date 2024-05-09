@@ -1,4 +1,4 @@
-import { getChatRooms } from "app/utils/msgdb";
+import { getChatRooms } from "app/utils/db/msgdb";
 
 export async function GET(req: Request) {
     const url = new URL(req.url);

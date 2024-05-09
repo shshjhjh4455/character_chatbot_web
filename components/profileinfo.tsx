@@ -1,4 +1,4 @@
-import { getChatBot } from "app/utils/chatbotdb";
+import { getChatBot } from "app/utils/db/chatbotdb";
 
 export default async function ProfileInfo({chatBotId}: {chatBotId: string}) {
   const res = await getChatBot(chatBotId);

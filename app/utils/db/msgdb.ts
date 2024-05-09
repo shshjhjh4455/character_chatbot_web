@@ -1,6 +1,6 @@
 import { authOptions } from "app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { prisma } from "./prisma";
+import { prisma } from "../prisma";
 
 async function findChatroomId(chatbotId : string) {
     const session = await getServerSession(authOptions);

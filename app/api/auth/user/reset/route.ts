@@ -1,4 +1,4 @@
-import { updatePassword } from 'app/utils/userdb';
+import { updatePassword } from 'app/utils/db/userdb';
 
 interface Req {
     email: string;

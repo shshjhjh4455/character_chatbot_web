@@ -1,4 +1,4 @@
-import { getChatBots } from "app/utils/chatbotdb";
+import { getChatBots } from "app/utils/db/chatbotdb";
 // import ProfileInfo from "components/profileinfo";
 import Link from "next/link";
 import styles from "styles/chatroomlist.module.css";

@@ -1,5 +1,5 @@
-import { findMessageByChatroomId, getChatRooms, getChatbotName, getUserName } from "app/utils/msgdb";
-import { createMessage } from "app/utils/msgdb";
+import { findMessageByChatroomId, getChatRooms, getChatbotName, getUserName } from "app/utils/db/msgdb";
+import { createMessage } from "app/utils/db/msgdb";
 
 export async function GET(req: Request) {
     const url = new URL(req.url);
