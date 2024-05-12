@@ -1,5 +1,4 @@
 "use client";
-
 import { useChat } from "app/hooks/useChat";
 export default function ChatBox({ chatBotId }: { chatBotId: string }) {
     const styles = {
