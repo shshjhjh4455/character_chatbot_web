@@ -35,6 +35,7 @@ export default function LoginPage() {
                 <hr />
                 <button onClick={() => setIsForgot(true)}>Forgot Password?</button>
                 <button onClick={() => setIsSignup(true)}>Sign Up</button>
+                <button onClick={() => window.location.href = "/"}>Back to Main</button>
             </>}
             {isForgot && <>
                 <ForgotForm />
