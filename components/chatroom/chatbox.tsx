@@ -20,14 +20,14 @@ export default function ChatBox({ chatBotId }: { chatBotId: string }) {
         },
     };
 
-    const { data, isLoading, isError, mutate } = useChat(chatBotId);
+    const { data, isLoading, isError } = useChat(chatBotId);
 
     if (isLoading) return <div>loading...</div>;
     if (isError) return <div>failed to load</div>;
 
     return (
         <div style={{ flex: 7, padding: '5px', display: 'flex', flexDirection: "column-reverse", height: '300px', maxHeight: '300px', overflowY: 'scroll' }}>
-            {data.messages.map((msg: any, i) => (
+            {data.messages.map((msg: any, i : number) => (
                 <div key={i} style={{ flex : 3 }}>
                     <div style={styles[msg.role]}>
                         <div>{msg.role === 'user' ? data.user : data.bot}</div>

@@ -1,4 +1,4 @@
-import { findMessageByChatroomId, getChatRooms, getChatbotName, getUserName } from "app/utils/db/msgdb";
+import { deleteMessage, findMessageByChatroomId, getChatRooms, getChatbotName, getUserName } from "app/utils/db/msgdb";
 import { createMessage } from "app/utils/db/msgdb";
 
 export async function GET(req: Request) {
@@ -25,6 +25,17 @@ export async function POST(req: Request) {
     if(result != null) {
         await createMessage(chatroomId, 'chatbot', "Chatbot test msg");
         return new Response(JSON.stringify({ status: 200, body: "Message created" }));
+    }
+    return new Response(JSON.stringify({ status: 500, body: "Error" }));
+}
+
+export async function DELETE(req: Request) {
+    const body = await req.json();
+    const chatroomId = body.chatroomId;
+    const result = await deleteMessage(chatroomId);
+
+    if(result != null) {
+        return new Response(JSON.stringify({ status: 200, body: "Message deleted" }));
     }
     return new Response(JSON.stringify({ status: 500, body: "Error" }));
 }

@@ -1,36 +1,31 @@
 "use client";
-
 import { useChat } from "app/hooks/useChat";
 
-export default function ChatInput({ chatroomId }: { chatroomId: string }) {
-
+export default function ClearBtn({ chatroomId }: { chatroomId: string }) {
     const { mutate } = useChat(chatroomId);
 
-    const sendMessage = async (event : any) => {
+    const clearChat = async (event : any) => {
         event.preventDefault();
         
         const chatroomId = event.target.chatroomId.value;
-        const msg = event.target.msg.value;
         
-        const response = await fetch('/api/chat', {
-            method: 'POST',
+        const response = await fetch('/api/clear', {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ chatroomId, msg }),
+            body: JSON.stringify({ chatroomId }),
         });
-
-        event.target.msg.value = "";
-        mutate();
+        const data = await response.json();
+        data.status === 200 && mutate();
     }
 
     return (
         <div style={{ flex: 2 }}>
             <center>
-                <form onSubmit={sendMessage}>
+                <form onSubmit={clearChat}>
                     <input hidden type="text" id="chatroomId" name="chatroomId" defaultValue={chatroomId} />
-                    <input size={50} type="text" id="msg" name="msg" />
-                    <button type="submit">Send</button>
+                    <button type="submit">Clear</button>
                 </form>
             </center>
         </div>

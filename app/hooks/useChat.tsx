@@ -16,17 +16,3 @@ export function useChat(chatBotId: string) {
         mutate,
     };
 }
-
-export function useChatRooms() {
-    const options = {
-        revalidateOnFocus: false,
-    };
-    const { data, error, mutate } = useSWR(`/api/chatroom`, fetcher, options);
-
-    return {
-        data,
-        isLoading: !error && !data,
-        isError: error,
-        mutate,
-    };
-}

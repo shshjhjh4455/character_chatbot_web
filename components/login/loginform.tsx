@@ -23,6 +23,11 @@ export default function LoginForm() {
 
     return (
         <>
+            <h3>SNS Login!!</h3>
+            <button onClick={() => signIn("google", { redirect: true, callbackUrl: '/' })}>Login with Google</button><br />
+            <button onClick={() => signIn("kakao", { redirect: true, callbackUrl: '/' })}>Login with KakaoTalk</button>
+            <hr/>
+            <h3>or Email Login</h3>
             <form onSubmit={handleLogin}>
                 <input
                     type="email"
@@ -38,10 +43,6 @@ export default function LoginForm() {
                 /><br />
                 <button type="submit">Login</button>
             </form>
-            <hr />
-            <h3>SNS Login!!</h3>
-            <button onClick={() => signIn("google", { redirect: true, callbackUrl: '/' })}>Login with Google</button>
-            <button onClick={() => signIn("kakao", { redirect: true, callbackUrl: '/' })}>Login with KakaoTalk</button>
         </>
     );
 }

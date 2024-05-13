@@ -192,3 +192,16 @@ export async function createMessage(chatbotId : string, role : string, msg : str
 
     return { send, update };
 }
+
+// Delete all messages of a chatroom
+export async function deleteMessage(chatbotId : string) {
+    const chatroomId = await findChatroomId(chatbotId);
+
+    const deleteMsg = await prisma.message.deleteMany({
+        where: {
+            chatroomId: chatroomId,
+        },
+    });
+
+    return deleteMsg;
+}
