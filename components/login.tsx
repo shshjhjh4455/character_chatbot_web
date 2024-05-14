@@ -14,10 +14,6 @@ export default function Login() {
                 >
                     {session.user.name}님 Log Out
                 </button>
-                <br />
-                <div>
-                    <a href="/chatbot">Start Chat With ChatBot!</a>
-                </div>
             </>
         );
     }
