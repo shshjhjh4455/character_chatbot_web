@@ -43,8 +43,8 @@ export async function verifyEmailLink(email : string, type : string) {
         return "Invalid email address";
     }
 
-    // Check if email is already in use
-    if (await findUserProvider(email, "credentials") != null) {
+    // Check if email is already in use if signing up
+    if (type == "signup" && await findUserProvider(email, "credentials") != null) {
         return "Email is already in use";
     }
 
