@@ -36,7 +36,6 @@ model ChatRoom {
   id             String     @id @default(auto()) @map("_id") @db.ObjectId
   chatbotId      String?
   userId         String?
-  updatedAt      DateTime   @updatedAt @db.Date
   messages       Message[]
 
   user           User?      @relation(fields : [userId], references: [id])
@@ -53,4 +52,11 @@ model Message {
   chatroomId     String?
 
   chatroom       ChatRoom?  @relation(fields : [chatroomId], references : [id])
+}
+
+model EmailLink {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  email          String
+  type           String
+  createAt       DateTime   @default(now())
 }

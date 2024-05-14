@@ -40,7 +40,8 @@ export default function SignupForm() {
                     placeholder="Email"
                     name="signup-email"
                     required
-
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <button type="submit">Send Sign Up Link</button>
             </form>

@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import { findUserProvider } from './db/userdb';
 import { checkEmail } from './account/check';
+import { createEmailLink, deleteEmailLink, findEmailLink } from './db/emaildb';
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -12,6 +13,7 @@ const transporter = nodemailer.createTransport({
 
 export async function sendEmail(email : string) {
     if(checkEmail(email) != "ok") {//invalid email
+        console.log(email);
         console.log("Invalid Email");
         return 400;
     }
@@ -33,7 +35,17 @@ export async function sendEmail(email : string) {
     };
     console.log("Send!");
 
-    return transporter.sendMail(mailData).then(() => {return 200});
+    return transporter.sendMail(mailData).then(async () => {
+        if (await findEmailLink(email, "signup")) {
+            await deleteEmailLink(email, "signup");
+        }
+        const link = await createEmailLink(email, "signup");
+        if(!link) {
+            console.log("Email link not created");
+            return 500;
+        }
+        return 200
+    });
 }
 
 export async function sendEmailForgot(email : string) {
@@ -55,5 +67,15 @@ export async function sendEmailForgot(email : string) {
     };
     console.log("Send!");
 
-    return transporter.sendMail(mailData).then(() => {return 200});
+    return transporter.sendMail(mailData).then(async () => {
+        if (await findEmailLink(email, "reset")) {
+            await deleteEmailLink(email, "reset");
+        }
+        const link = await createEmailLink(email, "reset");
+        if(!link) {
+            console.log("Email link not created");
+            return 500;
+        }
+        return 200
+    });
 }
