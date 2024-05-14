@@ -1,4 +1,4 @@
-import { deleteMessage, findMessageByChatroomId, getChatRooms, getChatbotName, getUserName } from "app/utils/db/msgdb";
+import { deleteMessage, findMessageByChatroomId, getChatbotName, getUserName } from "app/utils/db/msgdb";
 import { createMessage } from "app/utils/db/msgdb";
 
 export async function GET(req: Request) {

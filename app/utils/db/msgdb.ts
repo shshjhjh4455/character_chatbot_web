@@ -181,16 +181,7 @@ export async function createMessage(chatbotId : string, role : string, msg : str
         return false;
     });
 
-    const update = await prisma.chatRoom.update({
-        where: {
-            id: chatroomId,
-        },
-        data: {
-            updatedAt: new Date(),
-        },
-    });
-
-    return { send, update };
+    return send;
 }
 
 // Delete all messages of a chatroom

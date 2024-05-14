@@ -9,7 +9,7 @@ export default function ClearBtn({ chatroomId }: { chatroomId: string }) {
         
         const chatroomId = event.target.chatroomId.value;
         
-        const response = await fetch('/api/clear', {
+        const response = await fetch('/api/chat', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
