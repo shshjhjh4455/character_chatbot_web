@@ -5,7 +5,7 @@ import { prisma } from "../prisma";
 async function findChatroomId(chatbotId : string) {
     const session = await getServerSession(authOptions);
     const uid = session.user.id;
-
+    
     const id = await prisma.chatRoom.findFirst({
         where: {
             chatbotId: chatbotId,
@@ -15,6 +15,17 @@ async function findChatroomId(chatbotId : string) {
             id: true,
         },
     });
+
+    //chatroom is not exist
+    if(id === null) {
+        await prisma.chatRoom.create({
+            data: {
+                chatbotId: chatbotId,
+                userId: uid,
+            },
+        });
+        return await findChatroomId(chatbotId);
+    }
 
     return id?.id;
 }

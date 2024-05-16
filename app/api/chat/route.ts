@@ -19,8 +19,9 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const { searchParams } = url;
     const chatBotId = searchParams.get('chatBotId');
+
     const messages = await findMessageByChatroomId(chatBotId);
-    
+
     return new Response(JSON.stringify(messages));
 }
 
