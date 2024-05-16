@@ -1,5 +1,7 @@
 import Provider from "components/provider/sessionProvider"
 import Navigation from "components/navigation"
+import Footer from "components/footer"
+import './globals.css'
 
 export const metadata = {
   title: 'Character Chatbot',
@@ -17,6 +19,7 @@ export default function RootLayout({
         <body>
           <Navigation />
           {children}
+          <Footer/>
         </body>
       </Provider>
     </html>
