@@ -3,7 +3,7 @@ import { useChat } from "app/hooks/useChat";
 export default function ChatBox({ chatBotId }: { chatBotId: string }) {
     const styles = {
         user: {
-            backgroundColor: "#ffff00",
+            backgroundColor: "#94beb8",
             float: "right",
             margin: "15px",
             padding: "20px",

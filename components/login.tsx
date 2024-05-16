@@ -9,15 +9,12 @@ export default function Login() {
         return (
             <>
                 <button
-                    className={styles.link}
+                    className="inline-flex text-white bg-green-500 border-2 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg"
                     onClick={() => signOut()}
                 >
                     {session.user.name}님 Log Out
                 </button>
                 <br />
-                <div>
-                    <a href="/chatbot">Start Chat With ChatBot!</a>
-                </div>
             </>
         );
     }

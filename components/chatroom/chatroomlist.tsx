@@ -17,7 +17,8 @@ export default function ChatRoomList() {
     return (
         <div style={{ flex: 3, padding: '5px', height: '300px', maxHeight: '300px', overflowY: 'scroll' }}>
             {chatrooms.map((chatroom) => (
-                <div key={chatroom.chatbotId} style={styles}>
+                <div className={""}
+                 key={chatroom.chatbotId}>
                     <Link prefetch href={`./${chatroom.chatbotId}`}>{chatroom.chatbot.name}</Link>
                     <p>Last msg : {chatroom.messages[0]?.msg} </p>
                 </div>
