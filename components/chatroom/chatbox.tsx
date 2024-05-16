@@ -27,10 +27,9 @@ export default function ChatBox({ chatBotId }: { chatBotId: string }) {
 
     return (
         <div style={{ flex: 7, padding: '5px', display: 'flex', flexDirection: "column-reverse", height: '300px', maxHeight: '300px', overflowY: 'scroll' }}>
-            {data.messages.map((msg: any, i : number) => (
+            {data.map((msg: any, i : number) => (
                 <div key={i} style={{ flex : 3 }}>
                     <div style={styles[msg.role]}>
-                        <div>{msg.role === 'user' ? data.user : data.bot}</div>
                         <div>{msg.msg}</div>
                     </div>
                 </div>

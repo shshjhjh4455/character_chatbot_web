@@ -1,18 +1,35 @@
-import { deleteMessage, findMessageByChatroomId, getChatbotName, getUserName } from "app/utils/db/msgdb";
+import { deleteMessage, findMessageByChatroomId } from "app/utils/db/msgdb";
 import { createMessage } from "app/utils/db/msgdb";
+import { getToken } from "next-auth/jwt";
+import { NextRequest } from "next/server";
 
-export async function GET(req: Request) {
+async function checkToken(req: NextRequest) {
+    const token = await getToken({ req, secret: process.env.SECRET });
+    if (!token) {
+        return null;
+    }
+    return token;
+}
+
+export async function GET(req: NextRequest) {
+    const token = await checkToken(req);
+    if (token == null) {
+        return new Response(JSON.stringify({ status: 401, body: "Unauthorized" }));
+    }
     const url = new URL(req.url);
     const { searchParams } = url;
     const chatBotId = searchParams.get('chatBotId');
     const messages = await findMessageByChatroomId(chatBotId);
-    const user = await getUserName(chatBotId);
-    const bot = await getChatbotName(chatBotId);
     
-    return new Response(JSON.stringify({ messages, user, bot }));
+    return new Response(JSON.stringify(messages));
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+    const token = await checkToken(req);
+    if (token == null) {
+        return new Response(JSON.stringify({ status: 401, body: "Unauthorized" }));
+    }
+
     const body = await req.json();
 
     const chatroomId = body.chatroomId;
@@ -29,7 +46,12 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ status: 500, body: "Error" }));
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(req: NextRequest) {
+    const token = await checkToken(req);
+    if (token == null) {
+        return new Response(JSON.stringify({ status: 401, body: "Unauthorized" }));
+    }
+
     const body = await req.json();
     const chatroomId = body.chatroomId;
     const result = await deleteMessage(chatroomId);

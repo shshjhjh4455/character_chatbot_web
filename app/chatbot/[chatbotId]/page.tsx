@@ -6,11 +6,25 @@ import ClearBtn from "components/chatroom/clearbtn";
 export default async function ChatbotPage({ params }: { params: { chatbotId: string } }) {
     const chatbot = await getChatBot(params.chatbotId);
 
+    const imgStyle = {
+        width: "60px",
+        height: "60px",
+        borderRadius: "50%",
+        marginRight: "10px",
+    }
+
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
             <div>
                 <center>
-                    <h1>{chatbot.name}</h1>
+                    <div>
+                        {chatbot.image ? (
+                            <img src={chatbot.image} alt={chatbot.name} style={imgStyle} />
+                        ) : (
+                            <span className="text-lg font-bold text-gray-500">?</span>
+                        )}
+                        <h1>{chatbot.name}</h1>
+                    </div>
                 </center>
                 <div style={{ float: "right" }}>
                     <ClearBtn chatroomId={chatbot.id} />
