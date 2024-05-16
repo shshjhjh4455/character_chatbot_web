@@ -85,7 +85,7 @@ export default function ProfileModal({ chatbot, onClose }: ProfileModalProps) {
           className={styles.chatButton}
           onClick={() => (window.location.href = `/chatbot/${chatbot.id}`)}
         >
-          채팅방 ㄱ ㄱ
+          채팅방 입장
         </button>
       </div>
     </div>
