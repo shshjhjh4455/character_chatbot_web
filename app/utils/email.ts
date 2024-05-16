@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
-import { findUserProvider } from './userdb';
-import { checkEmail } from './login/check';
+import { findUserProvider } from './db/userdb';
+import { checkEmail } from './account/check';
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendEmail(email : string) {
-    if(await checkEmail(email) != "ok") {//invalid email
+    if(checkEmail(email) != "ok") {//invalid email
         console.log("Invalid Email");
         return 400;
     }
@@ -37,7 +37,7 @@ export async function sendEmail(email : string) {
 }
 
 export async function sendEmailForgot(email : string) {
-    if(await !findUserProvider(email, "credentials")) {//user not exist
+    if(!findUserProvider(email, "credentials")) {//user not exist
         console.log("Email not exist");
         return 409;
     }

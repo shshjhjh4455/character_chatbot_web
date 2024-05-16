@@ -2,8 +2,8 @@ export function checkPW(password : string) {
     if (password.length < 8) {
         return "Password must be at least 8 characters long";
     }
-    if (password.length > 20) {
-        return "Password must be at most 20 characters long";
+    if (password.length > 25) {
+        return "Password must be at most 25 characters long";
     }
     if (!/[a-z]/.test(password)) {
         return "Password must contain at least one lowercase letter";

@@ -1,10 +1,9 @@
-
 import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import KakaoProvider from "next-auth/providers/kakao"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { findUserProvider } from "app/utils/userdb"
-
+import { findUserProvider } from "app/utils/db/userdb"
+//import jwt, { JwtPayload } from "jsonwebtoken";
 
 const authOptions : NextAuthOptions = {
     providers: [
@@ -27,12 +26,7 @@ const authOptions : NextAuthOptions = {
                     }),
                 });
                 const user = await res.json();
-                if (user) {
-                    return user;
-                }
-                else {
-                    return null;
-                }
+                return user;
             }
         }),
         GoogleProvider({
@@ -50,8 +44,8 @@ const authOptions : NextAuthOptions = {
     },
     session: {
         strategy: "jwt",
-        maxAge: 24 * 60 * 60,
-        updateAge: 6 * 60,
+        maxAge: 3 * 60 * 60, // 3 hours
+        updateAge: 10 * 60, // 10 minutes
     },
     secret: process.env.NEXTAUTH_SECRET!,
     callbacks: {
@@ -71,14 +65,16 @@ const authOptions : NextAuthOptions = {
 
         async session({ session, token }) {
             session.user = token as any;
-            session.user.id = token.sub;
             return session;
         },
 
         async signIn({ user, account }) {
+            if (!user?.email) {
+                return `/login?error=${user}`;
+            }
             const search = await findUserProvider(user.email, account.provider);
             if (!search && account.provider !== "credentials") {
-                // Create OAuth user if not found
+                // Create OAuth user in db if not found
                 const fet = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/user/oauth`, {
                     method: "POST",
                     headers: {

@@ -1,4 +1,4 @@
-import { prisma } from "./prisma";
+import { prisma } from "../prisma";
 import bcrypt from 'bcryptjs'
 
 export async function findUserProvider(email : string, provider : string) {
@@ -43,4 +43,19 @@ export async function createOAuthUser(name : string, email : string, provider : 
             provider: provider,
         },
     })
+}
+
+export async function createChatrooms(userId : string) {
+    const chatbots = await prisma.chatBot.findMany({
+        select: {
+            id: true,
+        },
+    });
+    
+    return prisma.chatRoom.createMany({
+        data: chatbots.map((chatbot) => ({
+            userId: userId,
+            chatbotId: chatbot.id,
+        })),
+    });
 }

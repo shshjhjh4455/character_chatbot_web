@@ -1,15 +1,30 @@
-import { StreamingTextResponse, experimental_streamText } from 'ai';
-import { openai } from 'ai/openai';
+import { findMessageByChatroomId, getChatRooms, getChatbotName, getUserName } from "app/utils/db/msgdb";
+import { createMessage } from "app/utils/db/msgdb";
 
-export const runtime = 'edge';
+export async function GET(req: Request) {
+    const url = new URL(req.url);
+    const { searchParams } = url;
+    const chatBotId = searchParams.get('chatBotId');
+    const messages = await findMessageByChatroomId(chatBotId);
+    const user = await getUserName(chatBotId);
+    const bot = await getChatbotName(chatBotId);
+    
+    return new Response(JSON.stringify({ messages, user, bot }));
+}
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+    const body = await req.json();
 
-  const result = await experimental_streamText({
-    model: openai.chat('gpt-3.5-turbo'),
-    messages,
-  });
+    const chatroomId = body.chatroomId;
+    const role = 'user';
+    const msg = body.msg;
 
-  return new StreamingTextResponse(result.toAIStream());
+    const result = await createMessage(chatroomId, role, msg);
+
+
+    if(result != null) {
+        await createMessage(chatroomId, 'chatbot', "Chatbot test msg");
+        return new Response(JSON.stringify({ status: 200, body: "Message created" }));
+    }
+    return new Response(JSON.stringify({ status: 500, body: "Error" }));
 }
