@@ -10,20 +10,19 @@ export default async function ChatbotPage({ params }: { params: { chatbotId: str
         width: "60px",
         height: "60px",
         borderRadius: "50%",
-        marginRight: "10px",
     }
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
             <div>
                 <center>
-                    <div>
+                    <div style={{marginTop:'20px'}}>
                         {chatbot.image ? (
                             <img src={chatbot.image} alt={chatbot.name} style={imgStyle} />
                         ) : (
                             <span className="text-lg font-bold text-gray-500">?</span>
                         )}
-                        <h1>{chatbot.name}</h1>
+                        <h1 style={{marginTop:'10px'}}>{chatbot.name}</h1>
                     </div>
                 </center>
                 <div style={{ float: "right" }}>
@@ -33,7 +32,7 @@ export default async function ChatbotPage({ params }: { params: { chatbotId: str
             <div style={{ flex: 8, display: "flex", flexDirection: "row" }}>
                 <ChatBox chatBotId={chatbot.id} />
             </div>
-            <div style={{ flex: 2 }}>
+            <div style={{ flex: 2 , }}>
                 <center>
                     <ChatInput chatroomId={chatbot.id} />
                 </center>

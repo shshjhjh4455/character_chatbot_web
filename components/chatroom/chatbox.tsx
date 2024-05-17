@@ -9,6 +9,10 @@ export default function ChatBox({ chatBotId }: { chatBotId: string }) {
             padding: "20px",
             borderRadius: "13px",
             border: "1px solid #000",
+            marginRight: "60px",
+            maxWidth:"450px",
+
+            
         },
         chatbot: {
             backgroundColor: "white",
@@ -17,6 +21,8 @@ export default function ChatBox({ chatBotId }: { chatBotId: string }) {
             margin: "15px",
             padding: "20px",
             borderRadius: "13px",
+            marginLeft: "60px",
+            maxWidth:"450px",
         },
     };
 
@@ -26,11 +32,13 @@ export default function ChatBox({ chatBotId }: { chatBotId: string }) {
     if (isError) return <div>failed to load</div>;
 
     return (
-        <div style={{ flex: 7, padding: '5px', display: 'flex', flexDirection: "column-reverse", height: '300px', maxHeight: '300px', overflowY: 'scroll' }}>
+        <div style={{ flex: 7, padding: '5px', display: 'flex', flexDirection: "column-reverse", height: '450px',maxHeight:'450px', overflowY: 'scroll', marginTop: "30px",}}>
             {data.map((msg: any, i : number) => (
                 <div key={i} style={{ flex : 3 }}>
                     <div style={styles[msg.role]}>
-                        <div>{msg.msg}</div>
+                        <div style={{width: 'max-content', maxWidth:'25vw', wordBreak:'break-all'}}>
+                            {msg.msg}
+                        </div>
                     </div>
                 </div>
             ))}
