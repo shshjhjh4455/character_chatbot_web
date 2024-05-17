@@ -2,6 +2,7 @@ import ChatBox from "components/chatroom/chatbox";
 import { getChatBot } from "app/utils/db/chatbotdb";
 import ChatInput from "components/chatroom/chatinput";
 import ClearBtn from "components/chatroom/clearbtn";
+import Backbtn from "components/chatroom/backbtn";
 
 export default async function ChatbotPage({ params }: { params: { chatbotId: string } }) {
     const chatbot = await getChatBot(params.chatbotId);
@@ -25,7 +26,8 @@ export default async function ChatbotPage({ params }: { params: { chatbotId: str
                         <h1 style={{marginTop:'10px'}}>{chatbot.name}</h1>
                     </div>
                 </center>
-                <div style={{ float: "right" }}>
+                <div style={{margin:"5vw",display:"flex" ,justifyContent:"space-between",}}>
+                    <Backbtn/>
                     <ClearBtn chatroomId={chatbot.id} />
                 </div>
             </div>

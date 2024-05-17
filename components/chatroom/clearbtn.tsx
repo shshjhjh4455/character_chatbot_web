@@ -21,13 +21,9 @@ export default function ClearBtn({ chatroomId }: { chatroomId: string }) {
     }
 
     return (
-        <div style={{ flex: 2, marginRight: "60px", backgroundColor: "main-color"}}>
-            <center>
-                <form onSubmit={clearChat}>
+        <div style={{ flex: 2,backgroundColor: "main-color"}}>
                     <input hidden type="text" id="chatroomId" name="chatroomId" defaultValue={chatroomId} />
-                    <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"60px", height:"40px",borderRadius:"14px",}} type="submit">Clear</button>
-                </form>
-            </center>
+                    <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"60px", height:"40px",borderRadius:"14px",marginLeft:"80vw"}} type="submit">Clear</button>
         </div>
     );
 }
