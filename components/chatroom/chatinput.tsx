@@ -29,7 +29,7 @@ export default function ChatInput({ chatroomId }: { chatroomId: string }) {
             <center>
                 <form onSubmit={sendMessage}>
                     <input hidden type="text" id="chatroomId" name="chatroomId" defaultValue={chatroomId} />
-                    <input style={{marginRight:'30px', border: "1px solid #000", height:"40px", borderRadius:"14px"}} size={60} type="text" id="msg" name="msg" />
+                    <input style={{paddingLeft:"10px",marginRight:'30px', border: "1px solid #000", height:"40px", borderRadius:"14px"}} size={60} type="text" id="msg" name="msg" />
                     <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"60px", height:"40px",borderRadius:"14px",}} type="submit">Send</button>
                 </form>
             </center>

@@ -70,23 +70,25 @@ export default function ProfileModal({ chatbot, onClose }: ProfileModalProps) {
         onMouseDown={handleMouseDown}
       >
         <button className={styles.closeButton} onClick={onClose}>
-          Close
+          X
         </button>
         <div className={styles.profileInfo}>
           <div className={styles.profileImage} onMouseDown={handleImageMouseDown}>
             <img src={chatbot.image} alt={chatbot.name} />
           </div>
           <div className={styles.profileDetails}>
-            <h2>{chatbot.name}</h2>
-            <p>{chatbot.description}</p>
+            <h2 style={{textAlign:'center'}}>{chatbot.name}</h2>
+            <p style={{marginTop:'20px',textAlign:'center'}}>{chatbot.description}</p>
           </div>
         </div>
-        <button
+        <div style={{textAlign:'center'}}>
+        <button style={{ justifyContent:'center',backgroundColor:"#94beb8",border: "1px solid #000", width:"90px", height:"40px",borderRadius:"14px",}}
           className={styles.chatButton}
           onClick={() => (window.location.href = `/chatbot/${chatbot.id}`)}
         >
           채팅방 입장
         </button>
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@
 import styles from 'styles/chatroomlist.module.css';
 import ProfileModal from 'components/profileinfo';
 import { useState, useEffect } from 'react';
+import ChatroomList from 'app/chatrooms/page';
 
 export default function ChatBotPage() {
   const [chatBots, setChatBots] = useState([]);
@@ -49,7 +50,7 @@ function ProfileItem({ chatroom }) {
         onClick={openModal}
       >
         <div className={`${styles.roomTitle} items-center`}>
-          <div className="w-10 h-10 rounded-full bg-gray-200 mr-2 flex items-center justify-center">
+          <div className="rounded-full bg-gray-200 mr-2 flex items-center justify-center">
             {chatroom.image ? (
               <img
                 src={chatroom.image}
@@ -60,8 +61,10 @@ function ProfileItem({ chatroom }) {
               <span className="text-lg font-bold text-gray-500">?</span>
             )}
           </div>
-          {chatroom.name}
-        </div>
+          <div style={{marginLeft:"20px"}}>
+            {chatroom.name}
+          </div>
+          </div>
       </div>
       {isModalOpen && (
         <ProfileModal chatbot={chatroom} onClose={closeModal} />
