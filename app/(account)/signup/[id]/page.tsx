@@ -20,8 +20,14 @@ export default async function SignUpPage({ params }: emailParams) {
         );
     }
 
+    const style = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    }
+
     return (
-        <div>
+        <div style={{ ...style, flexDirection : "column" }}>
             <CreateForm email={email} />
         </div>
     );

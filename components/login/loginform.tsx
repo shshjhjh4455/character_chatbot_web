@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react";
 import { FormEvent } from "react";
 
-export default function LoginForm() {
+export default function LoginForm({ errorMsg }) {
 
     // Sign in with email and password = credentialsprovider. Redirects to home page.
     const handleLogin = async(event: FormEvent<HTMLFormElement>) => {
@@ -28,6 +28,7 @@ export default function LoginForm() {
             <button onClick={() => signIn("kakao", { redirect: true, callbackUrl: '/' })}>Login with KakaoTalk</button>
             <hr/>
             <h3>or Email Login</h3>
+            {errorMsg && <h3 style={{ color: "red" }}>{errorMsg}</h3>}
             <form onSubmit={handleLogin}>
                 <input
                     type="email"

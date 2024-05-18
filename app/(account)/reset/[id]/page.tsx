@@ -20,8 +20,14 @@ export default async function ResetPassword({ params }: emailParams) {
         );
     }
 
+    const style = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    }
+
     return (
-        <div>
+        <div style={{ ...style, flexDirection : "column" }}>
             <ResetForm email={email} />
         </div>
     );

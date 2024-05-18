@@ -4,7 +4,6 @@
 import styles from 'styles/chatroomlist.module.css';
 import ProfileModal from 'components/profileinfo';
 import { useState, useEffect } from 'react';
-import ChatroomList from 'app/chatrooms/page';
 
 export default function ChatBotPage() {
   const [chatBots, setChatBots] = useState([]);

@@ -30,8 +30,7 @@ export default function LoginPage() {
         <div style={{ ...style, flexDirection : "column" }}>
             <h1>Login Page!!</h1>
             {!isForgot && !isSignup && <>
-                {errorMsg && <h3 style={{ color: "red" }}>{errorMsg}</h3>}
-                <LoginForm />
+                <LoginForm errorMsg={errorMsg} />
                 <hr />
                 <button onClick={() => setIsForgot(true)}>Forgot Password?</button>
                 <button onClick={() => setIsSignup(true)}>Sign Up</button>

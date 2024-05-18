@@ -11,14 +11,11 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export async function sendEmail(email : string) {
-    if(checkEmail(email) != "ok") {//invalid email
-        console.log(email);
-        console.log("Invalid Email");
+export async function sendEmail(email: string) {
+    if (checkEmail(email) != "ok") {//invalid email
         return 400;
     }
-    if(await findUserProvider(email, "credentials")) {//already exist email
-        console.log("Email already exist");
+    if (await findUserProvider(email, "credentials")) {//already exist email
         return 409;
     }
     const bs64 = btoa(email);//email address encode by base64
@@ -28,19 +25,27 @@ export async function sendEmail(email : string) {
         to: email,
         subject: `Sign up for Character_Chatbot`,
         html: `
-    <div>Sign Up Link!! = <a href="${link}">link</a></div>
-    </br>
-    <p>Send by Character_Chatbot</p>
-    `,
+        <div style="background-color: #f2f2f2; padding: 15px; border: 1px solid #d9d9d9; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <div style="text-align: center; padding: 15px;">
+                <h1 style="margin: 0; color: #333333;">Character Chatbot</h1>
+            </div>
+            <div style="text-align: center; padding: 15px;">
+                <p style="font-size: 20px; margin: 20px 0; color: #666666;">Sign Up!!</p>
+                <a href="${link}" style="background-color: #94beb8; color: white; text-decoration: none; border-radius: 5px; padding: 15px 30px; font-size: 16px; display: inline-block; margin-top: 20px;">
+                    Sign up
+                </a>
+                <p style="font-size: 12px; color: #999999; margin: 20px 0;">Link will expire after 24 hours.</p>
+            </div>
+        </div>
+        `,
     };
-    console.log("Send!");
 
     return transporter.sendMail(mailData).then(async () => {
         if (await findEmailLink(email, "signup")) {
             await deleteEmailLink(email, "signup");
         }
         const link = await createEmailLink(email, "signup");
-        if(!link) {
+        if (!link) {
             console.log("Email link not created");
             return 500;
         }
@@ -48,9 +53,8 @@ export async function sendEmail(email : string) {
     });
 }
 
-export async function sendEmailForgot(email : string) {
-    if(!findUserProvider(email, "credentials")) {//user not exist
-        console.log("Email not exist");
+export async function sendEmailForgot(email: string) {
+    if (!findUserProvider(email, "credentials")) {//user not exist
         return 409;
     }
     const bs64 = btoa(email);//email address encode by base64
@@ -60,20 +64,27 @@ export async function sendEmailForgot(email : string) {
         to: email,
         subject: `Reset Password in Character_Chatbot`,
         html: `
-    <div>Reset Password!! = <a href="${link}">link</a></div>
-    </br>
-    <p>Send by Character_Chatbot</p>
-    `,
+        <div style="background-color: #f2f2f2; padding: 15px; border: 1px solid #d9d9d9; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <div style="text-align: center; padding: 15px;">
+                <h1 style="margin: 0; color: #333333;">Character Chatbot</h1>
+            </div>
+            <div style="text-align: center; padding: 15px;">
+                <p style="font-size: 20px; margin: 20px 0; color: #666666;">Reset Your Password!!</p>
+                <a href="${link}" style="background-color: #94beb8; color: white; text-decoration: none; border-radius: 5px; padding: 15px 30px; font-size: 16px; display: inline-block; margin-top: 20px;">
+                    Reset
+                </a>
+                <p style="font-size: 12px; color: #999999; margin: 20px 0;">Link will expire after 24 hours.</p>
+            </div>
+        </div>
+        `,
     };
-    console.log("Send!");
 
     return transporter.sendMail(mailData).then(async () => {
         if (await findEmailLink(email, "reset")) {
             await deleteEmailLink(email, "reset");
         }
         const link = await createEmailLink(email, "reset");
-        if(!link) {
-            console.log("Email link not created");
+        if (!link) {
             return 500;
         }
         return 200
