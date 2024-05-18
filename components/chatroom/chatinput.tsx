@@ -20,8 +20,21 @@ export default function ChatInput({ chatroomId }: { chatroomId: string }) {
             body: JSON.stringify({ chatroomId, msg }),
         });
 
+        if (response.status === 200) {
+            mutate();
+            const chatbotres = await fetch('/api/chat/openai', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ chatroomId, message: msg }),
+            });
+
+            if (chatbotres.status === 200) {
+                mutate();
+            }
+        }
         event.target.msg.value = "";
-        mutate();
     }
 
     return (

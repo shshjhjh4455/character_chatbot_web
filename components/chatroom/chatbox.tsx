@@ -5,23 +5,20 @@ export default function ChatBox({ chatBotId }: { chatBotId: string }) {
         user: {
             backgroundColor: "#94beb8",
             float: "right",
-            margin: "15px",
+            //오른쪽은 60 나머지는 15
+            margin: "15px 15px 15px 60px",
             padding: "20px",
             borderRadius: "13px",
             border: "1px solid #000",
-            marginRight: "60px",
             maxWidth:"450px",
-
-            
         },
         chatbot: {
             backgroundColor: "white",
             border: "1px solid #000",
             float: "left",
-            margin: "15px",
+            margin: "15px 60px 15px 15px",
             padding: "20px",
             borderRadius: "13px",
-            marginLeft: "60px",
             maxWidth:"450px",
         },
     };

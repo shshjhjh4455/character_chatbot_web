@@ -1,4 +1,4 @@
-import { prisma } from '../../../utils/prisma';
+import { prisma } from 'app/utils/prisma';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, { params }: { params: { chatbotId: string } }) {
