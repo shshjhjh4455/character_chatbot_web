@@ -1,6 +1,12 @@
+import { getModel } from "app/utils/db/chatbotdb";
 import { createMessage } from "app/utils/db/msgdb";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_KEY,
+});
 
 async function checkToken(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.SECRET });
@@ -19,23 +25,17 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const chatroomId = body.chatroomId;
     const message = body.message;
+    const model = await getModel(chatroomId);
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.OPENAI_KEY}`,
-        },
-        body: JSON.stringify({
-            model: 'ft:gpt-3.5-turbo-0125:personal:parasite-giwoo:9PndvJgA',
-            messages: [{ role: 'user', content: message }],
-        }),
+    const response = await openai.chat.completions.create({
+        model: model,
+        messages: [{ role: 'user', content: message }],
     });
 
-    const data = await response.json();
+    const choices = response.choices;
 
-    if (data.choices[0].message.role == 'assistant') {
-        await createMessage(chatroomId, 'chatbot', data.choices[0].message.content);
+    if (choices[0].message.role == 'assistant') {
+        await createMessage(chatroomId, 'chatbot', choices[0].message.content);
         return new Response(JSON.stringify({ status: 200, body: "Messagme created" }));
     }
 

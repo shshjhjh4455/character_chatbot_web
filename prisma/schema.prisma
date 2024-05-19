@@ -29,6 +29,7 @@ model ChatBot {
   name           String
   description    String
   image          String
+  model          String?
   chatrooms      ChatRoom[]
 }
 

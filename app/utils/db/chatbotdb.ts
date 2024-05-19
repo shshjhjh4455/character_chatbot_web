@@ -18,3 +18,17 @@ export async function getChatBots() {
 
     return res;
 }
+
+
+export async function getModel(chatbotId: string) {
+    const res = await prisma.chatBot.findUnique({
+        where: {
+            id: chatbotId,
+        },
+        select: {
+            model : true,
+        },
+    });
+
+    return res.model;
+}
