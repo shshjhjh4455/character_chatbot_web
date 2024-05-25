@@ -29,7 +29,10 @@ export async function POST(req: NextRequest) {
 
     const response = await openai.chat.completions.create({
         model: model,
-        messages: [{ role: 'user', content: message }],
+        messages: [{
+            role: 'system',
+            content: 'Giwoo = 기우, 너는 이제 기우이다. 기우가 되어서 나와 대화해줘. 기우처럼 생각하여 말해야한다.' 
+        }, { role: 'user', content: message }],
     });
 
     const choices = response.choices;
