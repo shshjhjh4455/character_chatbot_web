@@ -3,7 +3,7 @@
 import ForgotForm from 'components/login/forgotform';
 import LoginForm from 'components/login/loginform';
 import SignupForm from 'components/login/signupform';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
@@ -11,13 +11,14 @@ export default function LoginPage() {
     const [isForgot, setIsForgot] = useState(false);
     const [isSignup, setIsSignup] = useState(false);
 
-    const errorMsg = useSearchParams().get("error");
-
     const session = useSession();
 
-    //Already Logged in
+    // Already Logged in
     if (session.data) {
-        window.location.href = "/";
+        if (typeof window !== 'undefined') {
+            window.location.href = "/";
+        }
+        return null; // While redirecting, don't render anything
     }
 
     const style = {
@@ -27,7 +28,23 @@ export default function LoginPage() {
     }
 
     return (
-        <div style={{ ...style, flexDirection : "column" }}>
+        <Suspense fallback={<div>Loading...</div>}>
+            <LoginContent
+                isForgot={isForgot}
+                setIsForgot={setIsForgot}
+                isSignup={isSignup}
+                setIsSignup={setIsSignup}
+                style={style}
+            />
+        </Suspense>
+    );
+}
+
+function LoginContent({ isForgot, setIsForgot, isSignup, setIsSignup, style }) {
+    const errorMsg = useSearchParams().get("error");
+
+    return (
+        <div style={{ ...style, flexDirection: "column" }}>
             <h1>Login Page!!</h1>
             {!isForgot && !isSignup && <>
                 <LoginForm errorMsg={errorMsg} />
@@ -46,4 +63,4 @@ export default function LoginPage() {
             </>}
         </div>
     );
-};
+}
