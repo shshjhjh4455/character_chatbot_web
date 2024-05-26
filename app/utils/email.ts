@@ -19,7 +19,7 @@ export async function sendEmail(email: string) {
         return 409;
     }
     const bs64 = btoa(email);//email address encode by base64
-    const link = `http://localhost:3000/signup/${bs64}`;
+    const link = `${process.env.NEXTAUTH_URL}/signup/${bs64}`;
     const mailData = {
         from: process.env.AUTH_USER,
         to: email,
@@ -58,7 +58,7 @@ export async function sendEmailForgot(email: string) {
         return 409;
     }
     const bs64 = btoa(email);//email address encode by base64
-    const link = `http://localhost:3000/reset/${bs64}`;
+    const link = `${process.env.NEXTAUTH_URL}/reset/${bs64}`;
     const mailData = {
         from: process.env.AUTH_USER,
         to: email,
