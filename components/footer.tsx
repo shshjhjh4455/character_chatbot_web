@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="text-gray-600 body-font">
   <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
     <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-      <span className="ml-3 text-xl">한성대학교 무작위선택</span>
+      <span className="ml-3 text-xl">한성대학교 비공개선택</span>
     </a>
     <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
       <a href="https://github.com/shshjhjh4455/character_chatbot_web" className="text-gray-500" target="_blank">
