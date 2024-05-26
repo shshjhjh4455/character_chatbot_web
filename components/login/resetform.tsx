@@ -20,13 +20,11 @@ export default function ResetForm({ email }) {
         const pwResult = checkPW(pw as string);
         if (pwResult !== "ok") {
             setValidPw(pwResult);
-            console.log(pwResult);
         } else { setValidPw(null); }
 
         const pwMatchResult = checkPWMatch(pw as string, pwCheck as string);
         if (pwMatchResult !== "ok") {
             setValidPwMatch(pwMatchResult);
-            console.log(pwMatchResult);
         } else { setValidPwMatch(null); }
 
         if (pwResult !== "ok" || pwMatchResult !== "ok") {
@@ -55,38 +53,43 @@ export default function ResetForm({ email }) {
         }
         else {
             setError("Failed to sign up");
-            return console.log("Failed to sign up");
+            return;
         }
     };
 
 
     return (
-        <>
-            <h1>Reset</h1>
-            {error && <h3 style={{ color: "red" }}>{error}</h3>}
-            <form onSubmit={handleReset}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <br />
+            <p style={{ color: "#000", fontSize: "20px" }}>Please enter your new password.</p>
+            <br />
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <form onSubmit={handleReset} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <input
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="email"
                     value={email}
                     name="email"
                     readOnly
-                /><br />
-                {validPw && <h3 style={{ color: "red" }}>{validPw}</h3>}
+                />
+                {validPw && <p style={{ color: "red" }}>{validPw}</p>}
                 <input
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="password"
                     placeholder="Password"
                     name="password"
                     required
-                /><br />
-                {validPwMatch && <h3 style={{ color: "red" }}>{validPwMatch}</h3>}
+                />
+                {validPwMatch && <p style={{ color: "red" }}>{validPwMatch}</p>}
                 <input
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="password"
                     placeholder="Password Again"
                     name="password-check"
                     required
-                /><br />
-                <button type="submit">Reset!</button>
+                />
+                <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"210px", height:"40px",borderRadius:"14px",}} type="submit">Reset!</button>
             </form>
-        </>
+        </div>
     );
 }

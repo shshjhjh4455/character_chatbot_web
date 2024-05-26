@@ -20,11 +20,9 @@ export default function ForgotForm() {
         const json = await response.json();
         setEmail('');
         if (json.status === 200) {
-            console.log('Email sent');
             setMsg("Email sent!");
             setError(null);
         } else {
-            console.log('Failed to send email');
             setMsg(null);
             setError("Failed to send email");
         }
@@ -32,11 +30,14 @@ export default function ForgotForm() {
 
     return (
         <>
-            <form onSubmit={handleForgot}>
+            <form onSubmit={handleForgot} style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
                 {msg && <h3 style={{ color: "green" }}>{msg}</h3>}
                 {error && <h3 style={{ color: "red" }}>{error}</h3>}
+                <br/>
+                <p style={{color:"#000",fontSize:"20px"}}>Please enter your email address to reset your password.</p>
+                <br/>
                 <input
-                style={{border: "1px solid #000", width: "200px", height: "60px",borderRadius:"14px"}}
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="email"
                     placeholder="Reset Password Email"
                     name="forgot-password"
@@ -44,8 +45,8 @@ export default function ForgotForm() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"200px", height:"60px",borderRadius:"14px",}} type="submit">Send Email to reset Password!</button>
-                </form>
+                <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"210px", height:"40px",borderRadius:"14px",}} type="submit">Send Email</button>
+            </form>
         </>
     );
 }

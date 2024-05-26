@@ -20,12 +20,10 @@ export default function CreateForm({ email }) {
         const pwResult = checkPW(pw as string);
         if (pwResult !== "ok") {
             setValidPw(pwResult);
-            console.log(pwResult);
         } else { setValidPw(null); }
         const pwMatchResult = checkPWMatch(pw as string, pwCheck as string);
         if (pwMatchResult !== "ok") {
             setValidPwMatch(pwMatchResult);
-            console.log(pwMatchResult);
         } else { setValidPwMatch(null); }
 
         if (pwResult !== "ok" || pwMatchResult !== "ok") {
@@ -56,43 +54,48 @@ export default function CreateForm({ email }) {
         }
         else {
             setError("Failed to Create");
-            return console.log("Failed to Create");
         }
     };
 
     return (
-        <>
-            <h1>Sign Up</h1>
-            {error && <h3 style={{ color: "red" }}>{error}</h3>}
-            <form onSubmit={handleSignUp}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <br />
+            <p style={{ color: "#000", fontSize: "20px" }}>Sign Up</p>
+            <br />
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <form onSubmit={handleSignUp} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <input
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="email"
                     value={email}
                     name="email"
                     readOnly
-                /><br />
+                />
                 <input
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="text"
                     placeholder="username"
                     name="name"
                     required
-                /><br />
-                {validPw && <h3 style={{ color: "red" }}>{validPw}</h3>}
+                />
+                {validPw && <p style={{ color: "red" }}>{validPw}</p>}
                 <input
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="password"
                     placeholder="Password"
                     name="password"
                     required
-                /><br />
-                {validPwMatch && <h3 style={{ color: "red" }}>{validPwMatch}</h3>}
+                />
+                {validPwMatch && <p style={{ color: "red" }}>{validPwMatch}</p>}
                 <input
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="password"
                     placeholder="Password Again"
                     name="password-check"
                     required
-                /><br />
-                <button type="submit">Sign Up</button>
+                />
+                <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"210px", height:"40px",borderRadius:"14px",}} type="submit">Sign Up</button>
             </form>
-        </>
+        </div>
     )
 }

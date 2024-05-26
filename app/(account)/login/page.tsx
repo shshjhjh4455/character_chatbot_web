@@ -45,21 +45,22 @@ function LoginContent({ isForgot, setIsForgot, isSignup, setIsSignup, style }) {
 
     return (
         <div style={{ ...style, flexDirection: "column" }}>
-            <h1>Login Page!!</h1>
             {!isForgot && !isSignup && <>
                 <LoginForm errorMsg={errorMsg} />
                 <hr />
-                <button onClick={() => setIsForgot(true)}>Forgot Password?</button>
-                <button onClick={() => setIsSignup(true)}>Sign Up</button>
-                <button onClick={() => window.location.href = "/"}>Back to Main</button>
+                <div>
+                    <button style={{backgroundColor:"#94beb8",border: "1px solid #000", marginTop:"15px", width:"180px", height:"40px", borderRadius:"14px", marginRight:"10px"}} onClick={() => setIsForgot(true)}>Forgot Password?</button>
+                    <button style={{backgroundColor:"#94beb8",border: "1px solid #000", marginTop:"15px", width:"180px", height:"40px", borderRadius:"14px"}} onClick={() => setIsSignup(true)}>Sign Up</button>
+                </div>
+                <button style={{backgroundColor:"#94beb8",border: "1px solid #000", marginTop:"15px", width:"180px", height:"40px", borderRadius:"14px"}} onClick={() => window.location.href = "/"}>Back to Main</button>
             </>}
             {isForgot && <>
                 <ForgotForm />
-                <button onClick={() => setIsForgot(false)}>Back to Login</button>
+                <button style={{backgroundColor:"#94beb8",border: "1px solid #000", marginTop:"15px", width:"180px", height:"40px", borderRadius:"14px"}} onClick={() => setIsForgot(false)}>Back to Login</button>
             </>}
             {isSignup && <>
                 <SignupForm />
-                <button onClick={() => setIsSignup(false)}>Back to Login</button>
+                <button style={{backgroundColor:"#94beb8",border: "1px solid #000", marginTop:"15px", width:"180px", height:"40px", borderRadius:"14px"}} onClick={() => setIsSignup(false)}>Back to Login</button>
             </>}
         </div>
     );

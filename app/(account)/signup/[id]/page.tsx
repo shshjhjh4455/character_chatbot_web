@@ -14,8 +14,8 @@ export default async function SignUpPage({ params }: emailParams) {
 
     if (check != "ok") {
         return (
-            <div>
-                <h1>{check}</h1>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <p className="text-2xl text-red-500">{check}</p>
             </div>
         );
     }

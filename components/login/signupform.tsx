@@ -21,21 +21,23 @@ export default function SignupForm() {
 
         setEmail('');
         if (json.status === 200) {
-            console.log('Email sent');
             setMsg("Email sent!");
             setError(null);
         } else {
-            console.log('Failed to send email');
             setError("Failed to send email");
         }
     };
 
     return (
         <>
-            <form onSubmit={handleEmail}>
+            <form onSubmit={handleEmail} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 {msg && <h3 style={{ color: "green" }}>{msg}</h3>}
                 {error && <h3 style={{ color: "red" }}>{error}</h3>}
+                <br />
+                <p style={{color:"#000",fontSize:"20px"}}>Please enter your email address to sign up.</p>
+                <br />
                 <input
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="email"
                     placeholder="Email"
                     name="signup-email"
@@ -43,7 +45,7 @@ export default function SignupForm() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <button type="submit">Send Sign Up Link</button>
+                <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"210px", height:"40px",borderRadius:"14px",}} type="submit">Send Email</button>
             </form>
         </>
     );

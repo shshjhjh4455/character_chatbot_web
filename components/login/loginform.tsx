@@ -23,27 +23,28 @@ export default function LoginForm({ errorMsg }) {
 
     return (
         <>
-            <h3 style={{marginTop:"30px" }}>SNS Login!!</h3>
-            <button style={{backgroundColor:"#94beb8",border: "1px solid #000", marginTop:"15px", width:"200px", height:"40px", borderRadius:"14px"}} onClick={() => signIn("google", { redirect: true, callbackUrl: '/' })}>Login with Google</button><br />
+            <p style={{color:"#000",fontSize:"20px"}}>SNS Login</p>
+            <button style={{backgroundColor:"#94beb8",border: "1px solid #000", marginTop:"15px", width:"200px", height:"40px", borderRadius:"14px", marginBottom:"10px"}} onClick={() => signIn("google", { redirect: true, callbackUrl: '/' })}>Login with Google</button>
             <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"200px", height:"40px", borderRadius:"14px"}} onClick={() => signIn("kakao", { redirect: true, callbackUrl: '/' })}>Login with KakaoTalk</button>
-            <hr/>
-            <h3 style={{marginTop:"30px" }}>or Email Login</h3>
+            <br />
+            <p style={{color:"#000",fontSize:"20px", marginTop:"15px"}}>Email Login</p>
+            <br />
             {errorMsg && <h3 style={{ color: "red" }}>{errorMsg}</h3>}
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
                 <input
-                    style={{border:"1px solid #000",marginTop:"5px"}}
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="email"
                     placeholder="Email"
                     name="email"
                     required
-                /><br />
+                />
                 <input
-                    style={{border:"1px solid #000",marginTop:"5px"}}
+                    style={{border: "1px solid #000", width: "250px", height: "40px",borderRadius:"14px", padding:"5px",marginBottom:"10px"}}
                     type="password"
                     placeholder="Password"
                     name="password"
                     required
-                /><br />
+                />
                 <button style={{backgroundColor:"#94beb8",border: "1px solid #000", marginTop:"15px", width:"180px", height:"40px", borderRadius:"14px"}}
                 type="submit">Login</button>
             </form>
