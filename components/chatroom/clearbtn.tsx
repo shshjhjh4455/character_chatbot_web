@@ -22,8 +22,10 @@ export default function ClearBtn({ chatroomId }: { chatroomId: string }) {
 
     return (
         <div style={{ flex: 2,backgroundColor: "main-color"}}>
+                    <form onSubmit={clearChat}>
                     <input hidden type="text" id="chatroomId" name="chatroomId" defaultValue={chatroomId} />
                     <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"60px", height:"40px",borderRadius:"14px",marginLeft:"80vw"}} type="submit">Clear</button>
+                    </form>
         </div>
     );
 }
