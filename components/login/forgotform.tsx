@@ -36,6 +36,7 @@ export default function ForgotForm() {
                 {msg && <h3 style={{ color: "green" }}>{msg}</h3>}
                 {error && <h3 style={{ color: "red" }}>{error}</h3>}
                 <input
+                style={{border: "1px solid #000", width: "200px", height: "60px",borderRadius:"14px"}}
                     type="email"
                     placeholder="Reset Password Email"
                     name="forgot-password"
@@ -43,8 +44,8 @@ export default function ForgotForm() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <button type="submit">Send Email to reset Password!</button>
-            </form>
+                <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"200px", height:"60px",borderRadius:"14px",}} type="submit">Send Email to reset Password!</button>
+                </form>
         </>
     );
 }
