@@ -30,13 +30,14 @@ model ChatBot {
   description    String
   image          String
   model          String?
+  prompt         String
   chatrooms      ChatRoom[]
 }
 
 model ChatRoom {
   id             String     @id @default(auto()) @map("_id") @db.ObjectId
-  chatbotId      String?
-  userId         String?
+  chatbotId      String     @map("chatbot_id") @db.ObjectId
+  userId         String     @map("user_id") @db.ObjectId
   messages       Message[]
 
   user           User?      @relation(fields : [userId], references: [id])
@@ -50,7 +51,7 @@ model Message {
   role           String
   createAt       DateTime   @default(now())
   msg            String
-  chatroomId     String?
+  chatroomId     String     @map("chatroom_id") @db.ObjectId
 
   chatroom       ChatRoom?  @relation(fields : [chatroomId], references : [id])
 }

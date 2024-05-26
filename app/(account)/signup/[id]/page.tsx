@@ -1,21 +1,36 @@
 "use client";
 
-import { verifyEmailLink } from "app/utils/account/check";
 import CreateForm from "components/login/createform";
+import { useEffect, useState } from "react";
 
 interface emailParams {
     params: { id: string }
 }
 
-export default async function SignUpPage({ params }: emailParams) {
+export default function SignUpPage({ params }: emailParams) {
+    const [verify, setVerify] = useState({ status: 0, body: "" });
     const email = atob(decodeURIComponent(params.id));
 
-    const check = await verifyEmailLink(email, "signup");
+    useEffect(() => {
+        fetch("/api/verify-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                type: "signup"
+            }),
+        }).then((res) => res.json())
+        .then((data) => {
+            setVerify(data);
+        });
+    }, []);
 
-    if (check != "ok") {
+    if (verify.status === 400) {
         return (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <p className="text-2xl text-red-500">{check}</p>
+            <div>
+                <h1>{verify.body}</h1>
             </div>
         );
     }

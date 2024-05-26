@@ -1,5 +1,5 @@
-import { getModel } from "app/utils/db/chatbotdb";
-import { createMessage } from "app/utils/db/msgdb";
+import { getModelandPrompt } from "app/utils/db/chatbotdb";
+import { createMessage, findMessageByChatroomId } from "app/utils/db/msgdb";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
 import OpenAI from "openai";
@@ -24,15 +24,32 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const chatroomId = body.chatroomId;
-    const message = body.message;
-    const model = await getModel(chatroomId);
+    const messages = await findMessageByChatroomId(chatroomId);
+    const reversedMessages = messages.reverse();
+
+    const { model, prompt } = await getModelandPrompt(chatroomId);
+
+    const USER: OpenAI.ChatCompletionRole = "user";
+    const ASSISTANT: OpenAI.ChatCompletionRole = "assistant";
 
     const response = await openai.chat.completions.create({
         model: model,
-        messages: [{
-            role: 'system',
-            content: 'Giwoo = 기우, 너는 이제 기우이다. 기우가 되어서 나와 대화해줘. 기우처럼 생각하여 말해야한다.' 
-        }, { role: 'user', content: message }],
+        messages: [
+            {
+                role: 'system',
+                content: prompt,
+            },
+            ...reversedMessages.slice(0, -1).map((msg)=> ({
+                role : msg.role === 'user' ? USER : ASSISTANT,
+                content: msg.msg,
+            })),
+            {
+                role: 'user',
+                content: reversedMessages[messages.length - 1].msg,
+            },
+        ],
+        temperature: 0.1,
+        max_tokens: 1000,
     });
 
     const choices = response.choices;

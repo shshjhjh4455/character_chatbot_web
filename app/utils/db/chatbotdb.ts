@@ -20,15 +20,16 @@ export async function getChatBots() {
 }
 
 
-export async function getModel(chatbotId: string) {
+export async function getModelandPrompt(chatbotId: string) {
     const res = await prisma.chatBot.findUnique({
         where: {
             id: chatbotId,
         },
         select: {
             model : true,
+            prompt : true,
         },
     });
 
-    return res.model;
+    return { model: res.model, prompt: res.prompt };
 }

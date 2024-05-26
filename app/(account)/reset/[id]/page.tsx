@@ -1,21 +1,36 @@
 "use client";
 
-import { verifyEmailLink } from "app/utils/account/check";
+import { useEffect, useState } from "react";
 import ResetForm from "components/login/resetform";
 
 interface emailParams {
     params: { id: string }
 }
 
-export default async function ResetPassword({ params }: emailParams) {
+export default function ResetPassword({ params }: emailParams) {
+    const [verify, setVerify] = useState({ status: 0, body: "" });
     const email = atob(decodeURIComponent(params.id));
 
-    const check = await verifyEmailLink(email, "reset");
+    useEffect(() => {
+        fetch("/api/verify-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                type: "signup"
+            }),
+        }).then((res) => res.json())
+        .then((data) => {
+            setVerify(data);
+        });
+    }, []);
 
-    if (check != "ok") {
+    if (verify.status === 400) {
         return (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <p className="text-2xl text-red-500">{check}</p>
+            <div>
+                <p className="text-red-500">{verify.body}</p>
             </div>
         );
     }

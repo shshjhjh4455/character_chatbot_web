@@ -29,7 +29,7 @@ export default function ChatInput({ chatroomId }: { chatroomId: string }) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ chatroomId, message: msg }),
+                body: JSON.stringify({ chatroomId, msg }),
             });
 
             if (chatbotres.status === 200) {
