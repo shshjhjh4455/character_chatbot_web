@@ -11,25 +11,28 @@ export default function ResetPassword({ params }: emailParams) {
     const [verify, setVerify] = useState({ status: 0, body: "" });
     const email = atob(decodeURIComponent(params.id));
 
-    useEffect(() => {
-        fetch("/api/verify-email", {
+    const fetching = async () => {
+        const response = await fetch("/api/verify", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 email: email,
-                type: "signup"
+                type: "reset"
             }),
-        }).then((res) => res.json())
-        .then((data) => {
-            setVerify(data);
         });
+        const data = await response.json();
+        setVerify(data);
+    }
+
+    useEffect(() => {
+        fetching();
     }, []);
 
     if (verify.status === 400) {
         return (
-            <div>
+            <div className="text-center">
                 <p className="text-red-500">{verify.body}</p>
             </div>
         );

@@ -17,7 +17,7 @@ export default function HomePage() {
           <p className="my-8 mb-12 leading-relaxed">영화 속 인물의 성격을 배경, 대사와 행동을 통해 분석하여 <br /> 이를 본따 만든 챗봇과 이야기를 나눌 수 있는 프로젝트입니다.</p>
           <div className="flex w-full justify-center items-end">
             <button onClick={() => router.push("/chatbot")} className="inline-flex text-white bg-main-color border-0 py-2 px-6 mx-4 focus:outline-none hover:bg-green-600 rounded text-lg">시작하기</button>
-            <button onClick={() => router.push("/AboutUs")} className="inline-flex text-white bg-gray-500 border-0 py-2 px-6 mx-4 focus:outline-none hover:bg-green-600 rounded text-lg">설명</button>
+            <button onClick={() => router.push("/aboutus")} className="inline-flex text-white bg-gray-500 border-0 py-2 px-6 mx-4 focus:outline-none hover:bg-green-600 rounded text-lg">설명</button>
           </div>
         </div>
       </div>

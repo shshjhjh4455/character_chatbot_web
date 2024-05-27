@@ -8,11 +8,11 @@ interface emailParams {
 }
 
 export default function SignUpPage({ params }: emailParams) {
-    const [verify, setVerify] = useState({ status: 0, body: "" });
+    const [verify, setVerify] = useState({ status: 0, body: "Loading..." });
     const email = atob(decodeURIComponent(params.id));
 
-    useEffect(() => {
-        fetch("/api/verify-email", {
+    const fetching = async () => {
+        const response = await fetch("/api/verify", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -21,16 +21,19 @@ export default function SignUpPage({ params }: emailParams) {
                 email: email,
                 type: "signup"
             }),
-        }).then((res) => res.json())
-        .then((data) => {
-            setVerify(data);
         });
-    }, []);
+        const data = await response.json();
+        setVerify(data);
+    }
 
-    if (verify.status === 400) {
+    useEffect(() => {
+        fetching();
+    }, []);
+    
+    if (verify.status !== 200) {
         return (
-            <div>
-                <h1>{verify.body}</h1>
+            <div className="text-center">
+                <p className="text-red-500">{verify.body}</p>
             </div>
         );
     }

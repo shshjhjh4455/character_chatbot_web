@@ -1,7 +1,6 @@
 import { verifyEmailLink } from "app/utils/account/check";
 import { NextRequest } from "next/server";
 
-
 export async function POST(req: NextRequest) {
     const body = await req.json();
     const email = body.email;
