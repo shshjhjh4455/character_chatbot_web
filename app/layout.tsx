@@ -2,6 +2,7 @@ import Provider from "components/provider/sessionProvider"
 import Navigation from "components/navigation"
 import Footer from "components/footer"
 import './globals.css'
+import Head from 'next/head';
 
 export const metadata = {
   title: 'Character Chatbot',
@@ -15,6 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </Head>
       <Provider>
         <body>
           <Navigation />
