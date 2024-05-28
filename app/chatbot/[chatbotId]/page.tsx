@@ -15,26 +15,22 @@ export default async function ChatbotPage({ params }: { params: { chatbotId: str
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
-            <div>
-                <center>
-                    <div style={{marginTop:'20px'}}>
-                        {chatbot.image ? (
-                            <img src={chatbot.image} alt={chatbot.name} style={imgStyle} />
-                        ) : (
-                            <span className="text-lg font-bold text-gray-500">?</span>
-                        )}
-                        <h1 style={{marginTop:'10px'}}>{chatbot.name}</h1>
-                    </div>
-                </center>
-                <div style={{margin:"5vw",display:"flex" ,justifyContent:"space-between",}}>
-                    <Backbtn/>
-                    <ClearBtn chatroomId={chatbot.id} />
-                </div>
+            <div className="flex justify-between p-4">
+                <Backbtn />
+                <ClearBtn chatroomId={chatbot.id} />
+            </div>
+            <div className="flex justify-center items-center flex-row, p-4 border-b-2">
+                {chatbot.image ? (
+                    <img src={chatbot.image} alt={chatbot.name} style={imgStyle} />
+                ) : (
+                    <span className="text-lg font-bold text-gray-500">?</span>
+                )}
+                <p className="text-2xl font-bold ml-4">{chatbot.name}</p>
             </div>
             <div style={{ flex: 8, display: "flex", flexDirection: "row" }}>
                 <ChatBox chatBotId={chatbot.id} />
             </div>
-            <div style={{ flex: 2 , }}>
+            <div style={{ flex: 2, }}>
                 <center>
                     <ChatInput chatroomId={chatbot.id} />
                 </center>

@@ -8,7 +8,7 @@ export default function Backbtn() {
   
   return (
     <>
-    <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"60px", height:"40px",borderRadius:"14px",}} type="submit" onClick={router.back}>back</button>   
+    <button style={{backgroundColor:"#94beb8",border: "1px solid #000", width:"60px", height:"40px",borderRadius:"14px"}} type="submit" onClick={router.back}>back</button>   
     </>
   )
 }
