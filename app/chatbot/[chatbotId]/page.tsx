@@ -14,7 +14,7 @@ export default async function ChatbotPage({ params }: { params: { chatbotId: str
     }
 
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column"}}>
             <div className="flex justify-between p-4">
                 <Backbtn />
                 <ClearBtn chatroomId={chatbot.id} />

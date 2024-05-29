@@ -45,7 +45,10 @@ export default function ResetPassword({ params }: emailParams) {
     }
 
     return (
-        <div style={{ ...style, flexDirection : "column" }}>
+        <div
+            className="max-w-md mx-auto bg-white p-8 border border-gray-300 rounded-lg shadow-lg mt-10 mb-10"
+            style={{ ...style, flexDirection: "column" }}
+        >
             <ResetForm email={email} />
         </div>
     );

@@ -9,7 +9,7 @@ export default function ChatBox({ chatBotId }: { chatBotId: string }) {
     if (isError) return <div>failed to load</div>;
 
     return (
-        <div className="flex flex-col-reverse p-5 h-[450px] max-h-[450px] overflow-y-scroll mt-8">
+        <div className="flex flex-col-reverse p-5 h-[450px] max-h-[450px] overflow-y-scroll mt-8 w-full">
             {data.map((msg: any, i: number) => (
                 <ChatBubble key={i} role={msg.role} message={msg.msg} />
             ))}
@@ -25,7 +25,7 @@ function ChatBubble({ role, message }) {
     useEffect(() => {
         if (truncatedRef.current) {
             const lineHeight = parseInt(window.getComputedStyle(truncatedRef.current).lineHeight, 10);
-            const maxHeight = lineHeight * 7;
+            const maxHeight = lineHeight * 8;
             if (truncatedRef.current.scrollHeight > maxHeight) {
                 setNeedsTruncation(true);
             }
@@ -36,40 +36,56 @@ function ChatBubble({ role, message }) {
         setExpanded(true);
     };
 
-    const bubbleStyles = role === 'user' ?
-        "bg-[#94beb8] float-right m-3 p-5 rounded-lg border border-black max-w-[55%]" :
-        "bg-white float-left m-3 p-5 rounded-lg border border-black max-w-[55%]";
-
-    const buttonStyle = {
-        color: 'gray',
-        cursor: 'pointer',
-        fontSize: '0.8rem',
-        padding: '5px 10px',
-        borderRadius: '5px',
-        backgroundColor: 'transparent',
-        border: 'none',
-        display: 'block',
-        marginLeft: 'auto',
-        marginTop: '5px'
+    const styles = {
+        bubbleContainer: (role: string) => ({
+            display: 'flex',
+            justifyContent: role === 'user' ? 'flex-end' : 'flex-start',
+            margin: '10px 0',
+        }),
+        bubble: (role: string) => ({
+            backgroundColor: role === 'user' ? "#94beb8" : "white",
+            border: "1px solid #000",
+            margin: role === 'user' ? "0 10px 0 40px" : "0 40px 0 10px",
+            padding: "14px",
+            borderRadius: "14px",
+            maxWidth: "300px",
+            width: "fit-content",
+            wordBreak: "break-word" as 'break-word',
+        }),
+        button: {
+            color: 'gray',
+            cursor: 'pointer',
+            fontSize: '0.8rem',
+            padding: '5px 10px',
+            borderRadius: '5px',
+            backgroundColor: 'transparent',
+            border: 'none',
+            display: 'block',
+            marginTop: '5px',
+        },
+        truncated: {
+            display: '-webkit-box',
+            WebkitLineClamp: 8,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+        },
+        expanded: {
+            display: 'block',
+        }
     };
 
     return (
-        <div className="flex-3">
-            <div className={bubbleStyles}>
+        <div style={styles.bubbleContainer(role)}>
+            <div style={styles.bubble(role)}>
                 <div
                     ref={truncatedRef}
-                    className={`max-w-full ${expanded ? '' : 'overflow-hidden'}`}
-                    style={{
-                        display: expanded ? 'block' : '-webkit-box',
-                        WebkitLineClamp: expanded ? 'none' : 7,
-                        WebkitBoxOrient: 'vertical',
-                        textOverflow: 'ellipsis',
-                    }}
+                    style={expanded ? styles.expanded : styles.truncated}
                 >
                     {message}
                 </div>
                 {needsTruncation && !expanded && (
-                    <button onClick={handleExpand} style={buttonStyle}>
+                    <button onClick={handleExpand} style={styles.button}>
                         전체보기
                     </button>
                 )}
