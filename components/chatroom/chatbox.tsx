@@ -1,58 +1,79 @@
 "use client";
+import { useState, useEffect, useRef } from 'react';
 import { useChat } from "app/hooks/useChat";
 
 export default function ChatBox({ chatBotId }: { chatBotId: string }) {
-    const styles = {
-        user: {
-            backgroundColor: "#94beb8",
-            float: "right",
-            margin: "15px 15px 15px 60px",
-            padding: "20px",
-            borderRadius: "13px",
-            border: "1px solid #000",
-            maxWidth: "450px",
-        },
-        chatbot: {
-            backgroundColor: "white",
-            border: "1px solid #000",
-            float: "left",
-            margin: "15px 60px 15px 15px",
-            padding: "20px",
-            borderRadius: "13px",
-            maxWidth: "450px",
-        },
-    };
-
     const { data, isLoading, isError } = useChat(chatBotId);
 
     if (isLoading) return <div>loading...</div>;
     if (isError) return <div>failed to load</div>;
 
     return (
-        <div style={{
-            flex: 7,
-            padding: '5px',
-            display: 'flex',
-            flexDirection: "column-reverse",
-            height: '450px',
-            maxHeight: '450px',
-            overflowY: 'scroll',
-            marginTop: "30px",
-        }}>
+        <div className="flex flex-col-reverse p-5 h-[450px] max-h-[450px] overflow-y-scroll mt-8">
             {data.map((msg: any, i: number) => (
-                <div key={i} style={{ flex: 3 }}>
-                    <div style={{
-                        ...styles[msg.role],
-                        width: 'fit-content',
-                        maxWidth: '55%', // 기본 최대 너비를 70%로 설정
-                        wordBreak: 'break-word',
-                    }}>
-                        <div style={{ width: 'max-content', maxWidth: '100%', wordBreak: 'break-word' }}>
-                            {msg.msg}
-                        </div>
-                    </div>
-                </div>
+                <ChatBubble key={i} role={msg.role} message={msg.msg} />
             ))}
+        </div>
+    );
+}
+
+function ChatBubble({ role, message }) {
+    const [expanded, setExpanded] = useState(false);
+    const [needsTruncation, setNeedsTruncation] = useState(false);
+    const truncatedRef = useRef(null);
+
+    useEffect(() => {
+        if (truncatedRef.current) {
+            const lineHeight = parseInt(window.getComputedStyle(truncatedRef.current).lineHeight, 10);
+            const maxHeight = lineHeight * 7;
+            if (truncatedRef.current.scrollHeight > maxHeight) {
+                setNeedsTruncation(true);
+            }
+        }
+    }, [message]);
+
+    const handleExpand = () => {
+        setExpanded(true);
+    };
+
+    const bubbleStyles = role === 'user' ?
+        "bg-[#94beb8] float-right m-3 p-5 rounded-lg border border-black max-w-[55%]" :
+        "bg-white float-left m-3 p-5 rounded-lg border border-black max-w-[55%]";
+
+    const buttonStyle = {
+        color: 'gray',
+        cursor: 'pointer',
+        fontSize: '0.8rem',
+        padding: '5px 10px',
+        borderRadius: '5px',
+        backgroundColor: 'transparent',
+        border: 'none',
+        display: 'block',
+        marginLeft: 'auto',
+        marginTop: '5px'
+    };
+
+    return (
+        <div className="flex-3">
+            <div className={bubbleStyles}>
+                <div
+                    ref={truncatedRef}
+                    className={`max-w-full ${expanded ? '' : 'overflow-hidden'}`}
+                    style={{
+                        display: expanded ? 'block' : '-webkit-box',
+                        WebkitLineClamp: expanded ? 'none' : 7,
+                        WebkitBoxOrient: 'vertical',
+                        textOverflow: 'ellipsis',
+                    }}
+                >
+                    {message}
+                </div>
+                {needsTruncation && !expanded && (
+                    <button onClick={handleExpand} style={buttonStyle}>
+                        전체보기
+                    </button>
+                )}
+            </div>
         </div>
     );
 }
