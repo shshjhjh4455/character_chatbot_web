@@ -48,7 +48,7 @@ function ChatBubble({ role, message }) {
             margin: role === 'user' ? "0 10px 0 40px" : "0 40px 0 10px",
             padding: "14px",
             borderRadius: "14px",
-            maxWidth: "300px",
+            maxWidth: "55%",
             width: "fit-content",
             wordBreak: "break-word" as 'break-word',
         }),
