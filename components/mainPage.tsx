@@ -24,16 +24,16 @@ export default function HomePage() {
                 우리의 프로젝트는 영화 속 캐릭터와 친구처럼 대화하는 서비스입니다.
               </p>
             </div>
-            <div className="flex w-full justify-center items-end mb-12">
+            <div className="flex flex-wrap justify-center items-center w-full mb-12 space-x-4">
               <button
                 onClick={() => router.push("/chatbot")}
-                className="inline-flex text-white bg-main-color border-0 py-2 px-6 mx-4 focus:outline-none hover:bg-green-600 rounded text-lg transition-transform transform hover:scale-105"
+                className="inline-flex text-white bg-main-color border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg transition-transform transform hover:scale-105 whitespace-nowrap"
               >
                 시작하기
               </button>
               <button
                 onClick={() => router.push("/aboutus")}
-                className="inline-flex text-white bg-gray-500 border-0 py-2 px-6 mx-4 focus:outline-none hover:bg-green-600 rounded text-lg transition-transform transform hover:scale-105"
+                className="inline-flex text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg transition-transform transform hover:scale-105 whitespace-nowrap"
               >
                 설명
               </button>
