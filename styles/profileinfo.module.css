@@ -93,3 +93,26 @@
 .chatButton:hover {
   background-color: #7ca8a2;
 }
+
+@media screen and (max-width: 600px) {
+  .modalContent {
+    width: 90%;
+    height: auto;
+    top: 10%;
+  }
+  .profileImage {
+    width: 100px;
+    height: 100px;
+  }
+  .profileDetails h2 {
+    font-size: 20px;
+  }
+  .profileDetails p {
+    font-size: 14px;
+  }
+  .chatButton {
+    width: 100px;
+    height: 36px;
+    font-size: 14px;
+  }
+}

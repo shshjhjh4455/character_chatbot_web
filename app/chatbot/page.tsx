@@ -39,7 +39,7 @@ function Category({ category }) {
   return (
     <div className="mb-6">
       <div className="text-lg font-bold mb-4 p-3 bg-white rounded-lg shadow-md flex items-center justify-center text-center">{category.name}</div>
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-4">
         {chatBots.map((chatroom) => (
           <ProfileItem key={chatroom.id} chatroom={chatroom} />
         ))}
@@ -66,7 +66,7 @@ function ProfileItem({ chatroom }) {
         onClick={openModal}
       >
         <div className={`${styles.roomTitle} items-center`}>
-          <div className="rounded-full bg-gray-300 w-16 h-16 mr-4 flex items-center justify-center overflow-hidden">
+          <div className="rounded-full w-16 h-16 mr-4 flex items-center justify-center overflow-hidden">
             {chatroom.image ? (
               <img
                 src={chatroom.image}

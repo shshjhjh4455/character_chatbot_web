@@ -20,7 +20,7 @@
   align-items: center;
   background-color: white;
   padding: 20px;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -51,4 +51,22 @@
   border-radius: 50px;
   padding: 5px 12px;
   font-size: 14px;
+}
+
+@media screen and (max-width: 600px) {
+  .roomList {
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .roomTitle {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .roomList img {
+    width: 45px;
+    height: 45px;
+  }
 }
