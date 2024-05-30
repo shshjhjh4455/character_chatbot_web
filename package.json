@@ -1,7 +1,7 @@
 {
   "name": "character_chatbot_web",
   "version": "1.0.0",
-  "description": "nextJS",
+  "description": "Character Chatbot Web Application",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
