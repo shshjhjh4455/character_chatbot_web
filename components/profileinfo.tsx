@@ -1,11 +1,3 @@
-// export default async function ProfileInfo({chatBotId}: {chatBotId: string}) {
-//   const res = await getChatBot(chatBotId);
-//   return(
-//     <div className="container mx-auto flex flex-col px-5 py-24 justify-center items-center">
-//       <h1 className="mx-auto flex flex-col py-10 text-6xl">{res.name}</h1>
-//       <div className="text-3xl py-5">{res.description}</div>
-//       <a className="inline-flex text-white bg-green-500 border-0 py-2 px-6 mx-4 focus:outline-none hover:bg-green-600 rounded text-lg" href={`/chatbot/` + res.id}>Chat!</a>
-
 "use client";
 import styles from 'styles/profileinfo.module.css';
 import { useRef, useState, useEffect } from 'react';
@@ -28,8 +20,8 @@ export default function ProfileModal({ chatbot, onClose }: ProfileModalProps) {
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       if (isDragging && modalRef.current) {
-        const left = event.pageX - dragOffset.x;
-        const top = event.pageY - dragOffset.y;
+        const left = event.clientX - dragOffset.x;
+        const top = event.clientY - dragOffset.y;
         modalRef.current.style.left = `${left}px`;
         modalRef.current.style.top = `${top}px`;
       }
@@ -53,13 +45,10 @@ export default function ProfileModal({ chatbot, onClose }: ProfileModalProps) {
     const modalRect = modalRef.current?.getBoundingClientRect();
     if (modalRect) {
       setDragOffset({
-        x: event.pageX - modalRect.left,
-        y: event.pageY - modalRect.top,
+        x: event.clientX - modalRect.left,
+        y: event.clientY - modalRect.top,
       });
     }
-  };
-  const handleImageMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
   };
 
   return (
@@ -68,21 +57,22 @@ export default function ProfileModal({ chatbot, onClose }: ProfileModalProps) {
         ref={modalRef}
         className={styles.modalContent}
         onMouseDown={handleMouseDown}
+        style={{ position: 'absolute' }}
       >
         <button className={styles.closeButton} onClick={onClose}>
-          X
+          &times;
         </button>
         <div className={styles.profileInfo}>
-          <div className={styles.profileImage} onMouseDown={handleImageMouseDown}>
+          <div className={styles.profileImage}>
             <img src={chatbot.image} alt={chatbot.name} />
           </div>
           <div className={styles.profileDetails}>
-            <h2 style={{ textAlign: 'center' }}>{chatbot.name}</h2>
-            <p style={{ marginTop: '20px', textAlign: 'center' }}>{chatbot.description}</p>
+            <h2>{chatbot.name}</h2>
+            <p>{chatbot.description}</p>
           </div>
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <button style={{ justifyContent: 'center', backgroundColor: "#94beb8", border: "1px solid #000", width: "90px", height: "40px", borderRadius: "14px", marginTop: "5px" }}
+        <div className={styles.buttonContainer}>
+          <button
             className={styles.chatButton}
             onClick={() => (window.location.href = `/chatbot/${chatbot.id}`)}
           >
@@ -93,5 +83,3 @@ export default function ProfileModal({ chatbot, onClose }: ProfileModalProps) {
     </div>
   );
 }
-
-

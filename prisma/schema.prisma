@@ -30,8 +30,17 @@ model ChatBot {
   description    String
   image          String
   model          String?
+  categoryId     String       @map("category_id") @db.ObjectId
   prompt         String
   chatrooms      ChatRoom[]
+  
+  category       Category?    @relation(fields : [categoryId], references : [id])
+}
+
+model Category {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  chatbots       ChatBot[]
 }
 
 model ChatRoom {
@@ -61,4 +70,6 @@ model EmailLink {
   email          String
   type           String
   createAt       DateTime   @default(now())
+
+  @@unique([email, type])
 }

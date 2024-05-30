@@ -8,86 +8,88 @@
   display: flex;
   justify-content: center;
   z-index: 999;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .modalContent {
   background-color: white;
   padding: 20px;
-  border-radius: 8px;
-  max-height: 80%;
-  overflow-y: auto;
-  position: fixed;
-  width: 35%;
-  min-width: 300px;
-  max-width: 600px;
-  height: 60%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
-  top: 20%;
+  position: relative;
+  cursor: move;
 }
 
-@media screen and (max-width: 600px) {
-  .modalContent {
-    width: 90%;
-    height: 80%;
-    top: 10%;
-  }
-  .profileImage {
-    height: 150px;
-  }
-}
 .closeButton {
   position: absolute;
   top: 10px;
   right: 10px;
-  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .profileInfo {
   display: flex;
-  margin-top: 20px;
   flex-direction: column;
-  flex-grow: 1;
-  overflow: hidden
+  align-items: center;
+  margin-top: 20px;
 }
 
 .profileImage {
-  order: 1;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
   overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .profileImage img {
-  max-width: 100%;
-  max-height: 100%;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .profileDetails {
-  order: 2;
-  margin-left: 20px;
-  margin-top: 5px;
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profileDetails h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.profileDetails p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .chatButton {
-  margin-top: auto;
-  justify-content: center;
-  
+  background-color: #94beb8;
+  border: 1px solid #000;
+  color: white;
+  width: 120px;
+  height: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
-.profileInfo {
-  display: flex;
-  margin-top: 20px;
-  flex-direction: column;
-  flex-grow: 1;
-  overflow: hidden;
+.chatButton:hover {
+  background-color: #7ca8a2;
 }
