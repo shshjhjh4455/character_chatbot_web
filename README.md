@@ -1,5 +1,7 @@
 <div align="center">
 
+  ![데이터처리](https://github.com/shshjhjh4455/character_chatbot_model)
+
   ![](https://github.com/shshjhjh4455/character_chatbot_web/assets/115919002/261e7bfe-71bf-4ae1-93af-8cf112556825)
 
   # 가상 캐릭터 챗봇
