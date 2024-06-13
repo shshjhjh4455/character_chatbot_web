@@ -1,7 +1,5 @@
 <div align="center">
 
-  ![데이터처리](https://github.com/shshjhjh4455/character_chatbot_model)
-
   ![](https://github.com/shshjhjh4455/character_chatbot_web/assets/115919002/261e7bfe-71bf-4ae1-93af-8cf112556825)
 
   # 가상 캐릭터 챗봇
@@ -18,6 +16,8 @@
   #### 본 과제는 드라마 속 캐릭터를 기반으로 한 AI 챗봇을 개발하여, 시청자들이 콘텐츠에 더 깊이 몰입할 수 있게 하는 서비스를 제안한다. <br/> 이 AI 챗봇은 사용자가 드라마의 특정 장면이나 캐릭터에 대해 질문할 때 실시간으로 응답하며, 사용자의 궁금증을 해결하고 콘텐츠 이해도를 높인다. <br/> 또한, 사용자가 캐릭터와 대화하며 감정적으로 교류할 수 있는 기능을 포함하여, 드라마 종영 후에도 캐릭터와의 연결을 유지할 수 있도록 한다. 
 
   ### [데모 버전 실행해보기](https://character-chatbot-web.vercel.app/)
+
+  ### ![데이터 처리 방법](https://github.com/shshjhjh4455/character_chatbot_model)
 
   ## 팀원 소개
 
