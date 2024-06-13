@@ -56,6 +56,7 @@
   ├ ○ /_not-found (404 링크)
   ├ ○ /aboutus (설명 페이지)
   ├ ○ /chatbot (챗봇 프로필 목록 페이지)
+  ├ ○ /chatbot/[id] (채팅방 페이지)
   ├ ○ /login (로그인용 페이지)
   ├ ○ /reset/[id] (비밀번호 초기화 페이지)
   ├ ○ /signup/[id] (회원가입 페이지)
@@ -73,9 +74,6 @@
   └ ƒ /api/verify (회원가입/비밀번호 초기화 시 이메일이 유효한지 검사 api)
   ```
 
-  ### API 명세서
-
-
 
   ## 작품 소개 사진
   ![시작](https://github.com/shshjhjh4455/character_chatbot_web/assets/115919002/8baa5407-bcb6-46de-8adb-9ab46b9ff730)
@@ -84,8 +82,12 @@
   ![프로필 설명](https://github.com/shshjhjh4455/character_chatbot_web/assets/115919002/4c7fbbb1-f2d5-4dc5-ad7e-832d3452640f)
   ![채팅](https://github.com/shshjhjh4455/character_chatbot_web/assets/115919002/b6df9360-622f-41e6-8fdb-8bcde23b9c31)
 
-  
-  
+
+  ## 기대효과
+  ### 1) 수익성
+  추가 구독료나 이용료를 통한 새로운 수익 모델로 OTT 플랫 폼과 콘텐츠 제작자에게 추가 적인 수익을 창출합니다.
+  ### 2) 지속성
+  AI 챗봇을 통한 지속적인 사용자 와의 상호작용은 콘텐츠 종영 후 에도 감정적 연결을 유지하여 장 기적인 관심을 유도합니다.
 
   ## 사용한 라이브러리 소개
   
