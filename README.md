@@ -120,7 +120,7 @@
   
   ### 0. Clone
   ```console
-  git clone https://github.com/c](https://github.com/shshjhjh4455/character_chatbot_web.git
+  git clone https://github.com/shshjhjh4455/character_chatbot_web.git
   ```
   
   ### 1. 프로젝트 설치
